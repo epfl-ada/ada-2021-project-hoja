@@ -11,8 +11,10 @@ most about and see if it correlates to the death tolls. Furthermore, the researc
 
 ## Research questions
 
-Is there a significant asymmetry between the issues that receive the most attention and the issues that cause most deaths?
-Does the number of quotes about an issue increase/decrease proportionally to the number of deaths per year?
-Does the average age of victims of an issue affect how much attention it receives?
-Do issues receive more/less attention based on the average GDP of the countries they affect?
-Do issues grouped into injuries, communicable diseases and non-communicable diseases receive different amounts of attention per death caused?
+* Is there a significant asymmetry between the issues that receive the most attention and the issues that cause most deaths?
+* Does the number of quotes about an issue increase/decrease proportionally to the number of deaths per year?
+* Does the average age of victims of an issue affect how much attention it receives?
+* Do issues receive more/less attention based on the average GDP of the countries they affect?
+* Do issues grouped into injuries, communicable diseases and non-communicable diseases receive different amounts of attention per death caused?
+
+
