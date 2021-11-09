@@ -19,15 +19,20 @@ most about and see if it correlates to the death tolls. Furthermore, the researc
 
 ## Datasets
 
-In addition to the Quotebank dataset, we will explore Our World in Data, available here: [Causes of Death - Our World in Data][1]
+In addition to the Quotebank dataset, we will explore Our World in Data, available here: https://ourworldindata.org/causes-of-death. 
+This dataset contains ....
 
 ## Methods
 
+* 
+* Keyword search
+
 ## Timeline
+
+
 
 ## Proposed Timeline
 
 ## Organization within team
 
 
-[1] https://ourworldindata.org/causes-of-death  "Causes of Death - Our World in Data"
