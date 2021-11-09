@@ -1,8 +1,6 @@
-# ada-2021-project-hoja
-
 # Recognition and severity of issues asymmetries
 
-# Abstract
+## Abstract
 
 In this project, we will compare the number of quotes about issues with their death toll. The background for this research is our 
 belief that there is a significant asymmetry between the issues with the highest death tolls and the most spoken about issues. 
@@ -11,7 +9,7 @@ The death toll does not consider factors such as at what age people die, the fea
 However, the death toll is still a decent indicator of the severity of most issues. The goal of this research is to learn what issues society cares 
 most about and see if it correlates to the death tolls. Furthermore, the research will show which issues are neglected and hence need more attention.
 
-# Research questions
+## Research questions
 
 Is there a significant asymmetry between the issues that receive the most attention and the issues that cause most deaths?
 Does the number of quotes about an issue increase/decrease proportionally to the number of deaths per year?
