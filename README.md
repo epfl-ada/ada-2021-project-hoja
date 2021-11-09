@@ -17,4 +17,17 @@ most about and see if it correlates to the death tolls. Furthermore, the researc
 * Do issues receive more/less attention based on the average GDP of the countries they affect?
 * Do issues grouped into injuries, communicable diseases and non-communicable diseases receive different amounts of attention per death caused?
 
+## Datasets
 
+In addition to the Quotebank dataset, we will explore Our World in Data, available here: [Causes of Death - Our World in Data][1]
+
+## Methods
+
+## Timeline
+
+## Proposed Timeline
+
+## Organization within team
+
+
+[1] https://ourworldindata.org/causes-of-death  "Causes of Death - Our World in Data"
