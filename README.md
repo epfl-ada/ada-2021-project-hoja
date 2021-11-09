@@ -20,19 +20,32 @@ most about and see if it correlates to the death tolls. Furthermore, the researc
 ## Datasets
 
 In addition to the Quotebank dataset, we will explore Our World in Data, available here: https://ourworldindata.org/causes-of-death. 
-This dataset contains ....
+This dataset, is summarized from other datasources such as Global Sources of Disease (http://ghdx.healthdata.org/gbd-results-tool) and Amnesty
+International (https://www.amnesty.org/en/what-we-do/death-penalty/), contains the annual deathtolls as well as causes for each country from 
+2008 to 2017. 
 
 ## Methods
 
+In order to estimate asymmetries between media coverage and actual deathcauses, we have three main challenges.
+* **Quote Categorization**: In order to extract accurate categorizations of quotes about a certain category of death, we will create an intelligent 
+keyword extraction function. This will be done through ....
+
+* ****
+
+## Proposed Project Timeline
+* Week 45: As of now, we analyzed the 
+* Week 48: 
 * 
-* Keyword search
-
-## Timeline
-
-
-
-## Proposed Timeline
 
 ## Organization within team
+
+**Andrea** : Programming shit
+
+**Oliver Welin Odeback**: Analyzing  
+
+**Jurriaan Schuring**: Data-preprocessing, extracting information on country of origin of quotes thorugh QuoteIDs
+
+**Henrik Myhre**: Data processing on Our World in Data - dataset, extracting information on 
+
 
 
