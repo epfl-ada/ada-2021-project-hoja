@@ -13,20 +13,24 @@ class Keyword:
     def __init__(self, name):
         self.name = name
         self.output_filenames = []
+        self.json_quotes = []
         self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas","urls","phase"])
         self.synonym = []
     
     def find_keyword_in_quotation(self, quotation) -> bool:
 #         for syn in self.synonym:
-#             threshold = 100 - len(syn)
         lowercase_quotation = quotation.lower()
-
-#             if fuzz.partial_ratio(quotation, lowercase_quotation) > threshold:
-#                 return True
-        
-        if any(syn in lowercase_quotation for syn in self.synonym):
-            return True
-        
+        lowercase_quotation_list = lowercase_quotation.split(" ")
+        # print(lowercase_quotation)
+        # print(lowercase_quotation_list)
+        for syn in self.synonym:
+            threshold = 100 - len(syn)
+            if len(syn.split(" ")) == 1:
+                if syn in lowercase_quotation_list:
+                    return True
+            else:
+                if syn in lowercase_quotation:
+                    return True
         return False
 
         
