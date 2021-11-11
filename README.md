@@ -43,7 +43,7 @@ Once we have answers to these two strategies in place, we will move on to develo
 
 The current main tasks for each team member are the following:
 
-**Andrea**: Developing the code skeleton and the optimization quote classification.
+**Andrea Perozziello**: Developing the code skeleton and the optimization quote classification.
 
 **Oliver Welin Odeback**: Responsible for the data story and visualization of results. 
 
