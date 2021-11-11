@@ -1,8 +1,14 @@
-from keyword import Keyword
+#from keyword import Keyword
 import pandas as pd
 
 PATH_TO_KEYWORDS_FILE = "./data/keywords.txt"
 
+class Keyword:
+
+    def __init__(self, name):
+        self.name = name
+        self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas", "urls", "phase"])
+        self.synonym = []
 
 class Topics:
     quotes_occurences_df: pd.DataFrame = []
