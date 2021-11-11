@@ -1,12 +1,13 @@
-#from keyword import Keyword
+# from keyword import Keyword
 import pandas as pd
 import json
 from thefuzz import fuzz
 import os.path
 import bz2
 
-PATH_TO_KEYWORDS_FILE = "./data/keywords.txt"
-PATH = "./data/"
+DATA_PATH = "./data/"
+PATH_TO_KEYWORDS_FILE = DATA_PATH + "keywords.txt"
+
 
 class Keyword:
 
@@ -16,13 +17,10 @@ class Keyword:
         self.json_quotes = []
         self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas","urls","phase"])
         self.synonym = []
-    
+
     def find_keyword_in_quotation(self, quotation) -> bool:
-#         for syn in self.synonym:
         lowercase_quotation = quotation.lower()
         lowercase_quotation_list = lowercase_quotation.split(" ")
-        # print(lowercase_quotation)
-        # print(lowercase_quotation_list)
         for syn in self.synonym:
             threshold = 100 - len(syn)
             if len(syn.split(" ")) == 1:
@@ -33,9 +31,12 @@ class Keyword:
                     return True
         return False
 
-        
-
 class Topics:
+
+    def __init__(self, name: str, keywords: []):
+        self.name = name
+        self.keywords = keywords
+        self.quotes_occurrences_df = pd.DataFrame()
 
     def get_all_keyword_names(self) -> list:
         all_keyword_names = []
@@ -90,10 +91,3 @@ class Topics:
         with bz2.open(key.output_filenames[index], 'wb') as output_file:
             output_file.write((json.dumps(json.loads(line))+'\n').encode('utf-8'))
         output_file.close()
-
-
-    def __init__(self, name: str, keywords: []):
-        self.name = name
-        self.keywords = keywords
-        self.quotes_occurences_df = pd.DataFrame()
-
