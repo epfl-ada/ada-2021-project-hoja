@@ -2,6 +2,8 @@
 import pandas as pd
 import json
 from thefuzz import fuzz
+import os.path
+import bz2
 
 PATH_TO_KEYWORDS_FILE = "./data/keywords.txt"
 PATH = "./data/"
@@ -11,20 +13,23 @@ class Keyword:
     def __init__(self, name):
         self.name = name
         self.output_filenames = []
-        self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas", "urls", "phase"])
+        self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas","urls","phase"])
         self.synonym = []
     
     def find_keyword_in_quotation(self, quotation) -> bool:
-        #for syn in self.synonym:
-         #   threshold = 100 - len(syn)
+#         for syn in self.synonym:
+#             threshold = 100 - len(syn)
         lowercase_quotation = quotation.lower()
 
-           # if fuzz.partial_ratio(quotation, lowercase_quotation) > threshold:
-           #     return True
+#             if fuzz.partial_ratio(quotation, lowercase_quotation) > threshold:
+#                 return True
+        
         if any(syn in lowercase_quotation for syn in self.synonym):
             return True
+        
         return False
 
+        
 
 class Topics:
 
@@ -75,6 +80,13 @@ class Topics:
         for k in self.keywords:
             if k.find_keyword_in_quotation(quotation):
                 return k
+    
+    def assign_quote_to_file(self, keyword, index, line):
+        key = self.get_keyword_by_name(keyword)
+        with bz2.open(key.output_filenames[index], 'wb') as output_file:
+            output_file.write((json.dumps(json.loads(line))+'\n').encode('utf-8'))
+        output_file.close()
+
 
     def __init__(self, name: str, keywords: []):
         self.name = name
