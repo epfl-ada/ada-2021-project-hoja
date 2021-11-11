@@ -21,10 +21,13 @@ In addition to the Quotebank dataset, we will explore the data used in an articl
 
 To estimate asymmetries between media coverage and actual death causes, we have two main challenges. 
 
-* **Quote Categorization**: To extract accurate categorizations of quotes about a certain category of death, we will create an intelligent keyword extraction function. This means that quotes containing certain keywords belonging to a certain topic. This function will be optimized by analyzing the correctness of the classified quotes. The preliminary keywords used for each death cause is the following:
+* **Quote Categorization**: To extract accurate categorizations of quotes about a certain category of death, we will create an intelligent keyword extraction function. This means that quotes containing certain keywords belonging to a certain topic. This function will be optimized by analyzing the correctness of the classified quotes. An example of preliminary keywords used for the death causes are:
 
+**Meningitis** : <>inflammation of the protective membranes<>swelling of the protective membranes
 
+**Lower respiratory infections**: lower respiratory infections<>pneumonia<>bronchitis<>tuberculosis
 
+**Intestinal infectious diseases**: <>intestinal infectious diseases<>cholera<>typhoid fever<>paratyphoid fever<>salmonella 
 * **Under-represented vs over-represented**: To answer our research question, we will compare the ratios between the number of deaths and the number of quotes they have between the different quotes. 
 
 Once we have answers to these two strategies in place, we will move on to develop our methods for the research questions 2-5.
