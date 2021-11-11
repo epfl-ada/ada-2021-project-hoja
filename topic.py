@@ -4,26 +4,35 @@ import json
 from thefuzz import fuzz
 
 PATH_TO_KEYWORDS_FILE = "./data/keywords.txt"
-
+PATH = "./data/"
 
 class Keyword:
 
     def __init__(self, name):
         self.name = name
+        self.output_filenames = []
         self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas", "urls", "phase"])
         self.synonym = []
     
     def find_keyword_in_quotation(self, quotation) -> bool:
-        for syn in self.synonym:
-            threshold = 100 - len(syn)
-            lowercase_quotation = quotation.lower()
+        #for syn in self.synonym:
+         #   threshold = 100 - len(syn)
+        lowercase_quotation = quotation.lower()
 
-            if fuzz.partial_ratio(quotation, lowercase_quotation) > threshold:
-                return True
+           # if fuzz.partial_ratio(quotation, lowercase_quotation) > threshold:
+           #     return True
+        if any(syn in lowercase_quotation for syn in self.synonym):
+            return True
         return False
 
 
 class Topics:
+
+    def get_all_keyword_names(self) -> list:
+        all_keyword_names = []
+        for k in self.keywords:
+            all_keyword_names.append(k.name)
+        return all_keyword_names
 
     def get_keyword_by_name(self, name) -> Keyword:
         for k in self.keywords:
@@ -52,6 +61,14 @@ class Topics:
             print(tk.name)
             for i, tks in enumerate(tk.synonym):
                 if i == 0: print("Printing synonyms")
+                print("\t" + tks)
+
+    def print_pretty_keywords_years(self):
+        for tk in self.keywords:
+            print("\nPrinting keyword")
+            print(tk.name)
+            for i, tks in enumerate(tk.output_filenames):
+                if i == 0: print("Printing filenames")
                 print("\t" + tks)
                
     def match_quotation_with_any_keyword(self, quotation) -> Keyword:
