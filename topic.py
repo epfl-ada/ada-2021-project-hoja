@@ -1,6 +1,7 @@
 #from keyword import Keyword
 import pandas as pd
 import json
+from thefuzz import fuzz
 
 PATH_TO_KEYWORDS_FILE = "./data/keywords.txt"
 
@@ -10,11 +11,14 @@ class Keyword:
         self.name = name
         self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas", "urls", "phase"])
         self.synonym = []
+    
+    def find_keyword_in_quotation(self, quotation) -> bool:
+        for syn in self.synonym:
+            if fuzz.partial_ratio(quotation, syn) > (100 - len(syn)):
+                return True
+        return False
 
 class Topics:
-    quotes_occurences_df: pd.DataFrame = []
-    keywords = []
-
 
     def get_keyword_by_name(self, name) -> Keyword:
         for k in self.keywords:
@@ -44,9 +48,15 @@ class Topics:
             for i, tks in enumerate(tk.synonym):
                 if i == 0: print("Printing synonyms")
                 print("\t" + tks)
+               
+    def match_quotation_with_any_keyword(self, quotation) -> Keyword:
+        for k in self.keywords:
+            if k.find_keyword_in_quotation(quotation):
+                return k
 
 
     def __init__(self, name: str, keywords: []):
         self.name = name
         self.keywords = keywords
+        self.quotes_occurences_df = pd.DataFrame()
 
