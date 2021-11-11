@@ -1,5 +1,15 @@
-terrorism<>isis<>terrorists<>Al qaeda<>bin laden
-malaria
-bank
-a
-is
+Meningitis<>
+Lower respiratory infections
+Intestinal infectious diseases
+Protein-energy malnutrition
+Terrorism
+Cardiovascular diseases
+Alzheimer disease and other dementias<>Alzheimer<>Dementias
+Alcohol use disorders
+Exposure to forces of nature
+Diarrheal diseases
+Environmental heat and cold exposure
+Nutritional deficiencies
+Self-harm
+Diabetes mellitus
+Poisonings

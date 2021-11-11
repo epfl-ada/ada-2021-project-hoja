@@ -1,5 +1,6 @@
 #from keyword import Keyword
 import pandas as pd
+import json
 
 PATH_TO_KEYWORDS_FILE = "./data/keywords.txt"
 
@@ -19,6 +20,13 @@ class Topics:
         for k in self.keywords:
             if k.name == name:
                 return k
+    
+    def assign_keyword(self, found_keyword, line):
+        key = self.get_keyword_by_name(found_keyword.name)
+        key.quotes = key.quotes.append(
+                    json.loads(line),
+                    ignore_index = True)
+    
 
     def read_keywords_from_file(self):
         with open(PATH_TO_KEYWORDS_FILE, "r") as file:
