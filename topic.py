@@ -5,6 +5,7 @@ from thefuzz import fuzz
 
 PATH_TO_KEYWORDS_FILE = "./data/keywords.txt"
 
+
 class Keyword:
 
     def __init__(self, name):
@@ -14,9 +15,13 @@ class Keyword:
     
     def find_keyword_in_quotation(self, quotation) -> bool:
         for syn in self.synonym:
-            if fuzz.partial_ratio(quotation, syn) > (100 - len(syn)):
+            threshold = 100 - len(syn)
+            lowercase_quotation = quotation.lower()
+
+            if fuzz.partial_ratio(quotation, lowercase_quotation) > threshold:
                 return True
         return False
+
 
 class Topics:
 
@@ -30,14 +35,14 @@ class Topics:
         key.quotes = key.quotes.append(
                     json.loads(line),
                     ignore_index = True)
-    
 
     def read_keywords_from_file(self):
         with open(PATH_TO_KEYWORDS_FILE, "r") as file:
             textfile = file.readlines()
 
             for i, line in enumerate(textfile):
-                keywords_line = line.replace("\n", "").split("<>")
+                lowercase_line = line.lower()
+                keywords_line = lowercase_line.replace("\n", "").split("<>")
                 self.keywords.append(Keyword(keywords_line[0]))
                 self.keywords[i].synonym = keywords_line[1:]
 
@@ -53,7 +58,6 @@ class Topics:
         for k in self.keywords:
             if k.find_keyword_in_quotation(quotation):
                 return k
-
 
     def __init__(self, name: str, keywords: []):
         self.name = name
