@@ -74,7 +74,6 @@ East Timor	.tl
 Ecuador	.ec
 Egypt	.eg
 El Salvador	.sv
-England	.uk
 Equatorial Guinea	.gq 
 Eritrea	.er 
 Estonia	.ee 
@@ -177,7 +176,6 @@ Niue	.nu
 Norfolk Island	.nf
 North Korea	.kp
 North Macedonia	.mk
-Northern Ireland	.uk
 Northern Mariana Islands	.mp
 Norway	.no
 Oman	.om
@@ -207,7 +205,6 @@ Samoa	.ws
 San Marino	.sm
 São Tomé and Príncipe	.st
 Saudi Arabia	.sa
-Scotland	.uk
 Senegal	.sn
 Serbia	.rs
 Seychelles	.sc
@@ -248,7 +245,6 @@ Tuvalu	.tv
 Uganda	.ug
 Ukraine	.ua
 United Arab Emirates	.ae
-United Kingdom	.uk
 United States of America	.us
 United States Virgin Islands	.vi
 Uruguay	.uy
@@ -257,7 +253,6 @@ Vanuatu	.vu
 Vatican City	.va
 Venezuela	.ve
 Vietnam	.vn
-Wales	.uk
 Wallis and Futuna	.wf
 Western Sahara	.eh
 Yemen	.ye
