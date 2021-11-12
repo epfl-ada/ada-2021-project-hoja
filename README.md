@@ -14,17 +14,17 @@ This project will compare the number of quotes about specific death causes with 
 
 ## Datasets
 
-In addition to the Quotebank dataset, we will explore the data used in an article published in Our World in Data, available here: https://ourworldindata.org/causes-of-death. This dataset is extracted from other sources, mainly from Global Burden of Disease, a global study on the causes of death and disease, available here: http://ghdx.healthdata.org/gbd-results-tool, but also Amnesty International, which records data on e.g. executions, available here: https://www.amnesty.org/en/what-we-do/death-penalty/. The dataset used in Our World in Data contains estimations of the annual death tolls as well as their causes for each country from 1970 to 2017. Hence, we will use the overlapping years between the Quotebank dataset and the Our World in Data data: 2008-2017. The dataset from Our World in Data is already stored in a CSV file and needs minimal preprocessing. It includes death by cause for the world, individual countries, and different age groups, allowing us to work on all the research questions.
+In addition to the Quotebank dataset, we will explore the data used in an article published in Our World in Data, available here: https://ourworldindata.org/causes-of-death. These datasets are extracted from other sources, mainly from Global Burden of Disease, a global study on the causes of death and disease, available here: http://ghdx.healthdata.org/gbd-results-tool, but also Amnesty International, which records data on e.g., executions, available here: https://www.amnesty.org/en/what-we-do/death-penalty/. The datasets used in Our World in Data contain estimations of the annual death tolls and their causes for each country and age group from 1970 to 2017. Hence, we will use the overlapping years between the Quotebank dataset and the Our World in Data data: 2008-2017. The dataset from Our World in Data is already stored in a CSV file and needs minimal preprocessing. It includes death by cause for the world, individual countries, and different age groups, allowing us to work on all the research questions.
 
-We also use data from the UN with annual population count, available here: https://population.un.org/wpp/Download/Standard/Population/. This data is combined with the Our World in Data data to get a more realistic understanding of the yearly relative death tolls.
+We also use data from the UN with annual population count, available here: https://population.un.org/wpp/Download/Standard/Population/. This data is combined with the Our World in Data data to understand the yearly relative death tolls better.
 
-For research question four, we also need data on the GDP of countries. We can use data from The World Bank, available here: https://data.worldbank.org/indicator/NY.GDP.MKTP.CD.
+For research question four, we also need data on the GDP of countries and the country of origin for the speakers. We will get the GDP data from The World Bank, available here: https://data.worldbank.org/indicator/NY.GDP.MKTP.CD, and the origin countries are retrieved from Wikidata using the speakers QIDs.
 
 ## Methods
 
 To estimate asymmetries between media coverage and actual death causes, we have two main challenges.
 
-- **1. Quote categorization**: To extract accurate categorizations of quotes about a certain category of death, we will create an intelligent keyword extraction function. This means extracting quotes that contain keywords belonging to a certain death cause. The function will be optimized by analyzing the correctness of the classified quotes. Examples of preliminary keywords used for the death causes are:
+- **1. Quote categorization**: To accurately categorize the quotes to causes of death, we compare keywords for each death cause with the quotes. The process will be optimized by analyzing a sample of the classified quotes, and then modifying the keywords we use. We are currently just comparing strings in Python, but we plan on using The Fuzz, available here: https://github.com/seatgeek/thefuzz, which will allow us to include misspelled words or other slight modifications. For Milestone 1, we are not using The Fuzz because reading and comparing the quotes take too long, but we will try to optimize this process in Milestone 2. Examples of the preliminary keywords we use to extract relevant quotes are:
 
   - Diarrheal: dierrhea, cholera, etec, rotavirus, shigellosis, typhoid
 
@@ -32,13 +32,13 @@ To estimate asymmetries between media coverage and actual death causes, we have 
 
   - Intestinal infectious diseases: intestinal infectious diseases, cholera, typhoid fever, paratyphoid fever, salmonella
 
-- **2. Under-represented vs. over-represented**: To answer our first research question, we will compare the ratios between the number of deaths and quotes for all the issues.
+- **2. Under-represented vs. over-represented**: To answer our first research question, we will compare the ratios between deaths and quotes for all the issues.
 
-Once we have answers to these two strategies in place, we will develop our methods for the research questions 2-5. In combination with population data and GDP data, Our World in Data has all the information we need for these research questions. However, research question four considers countries' GDP, and the Quotebank dataset may be too restrictive. Understandably, people talk more about death causes that affect their country. Therefore, we would need speakers from a wide range of countries with different GDP levels to research question four. We are not confident that the Quotebank dataset contains enough quotes by people from countries with a low GDP.
+Once we have answers to these two strategies, we will develop our methods for the research questions 2-5. Our World in Data has all the information we need for these research questions in combination with population data and GDP data. However, research question four considers countries' GDP, and the Quotebank dataset may be too restrictive. Understandably, people talk more about death causes that affect their country. Therefore, we would need speakers from various countries with different GDP levels to research question four. We are not confident that the Quotebank dataset contains enough quotes by people from countries with a low GDP.
 
 ## Proposed Project Timeline
 
-- Week 45: As of now, the project pipeline is in place. We have performed initial analysis on the Our World of Data dataset, made the code skeleton to extract quotes belonging to specific death causes, and planned how to compare them to their actual death toll.
+- Week 45: As of now, the project pipeline is in place. We have performed initial analysis on most of the relevant Our World of Data datasets, made the code skeleton to extract quotes belonging to specific death causes, and planned how to compare them to their actual death toll.
 
 - Week 48: The goal is to have an initial analysis made on each death cause and to have preliminary results, e.g., results concerning the first of our research questions, and to have the structure in place to go further in our analysis.
 
