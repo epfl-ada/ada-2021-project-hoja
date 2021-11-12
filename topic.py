@@ -34,6 +34,14 @@ class Keyword:
     def pop_everything(self):
         self.json_lines.clear()
 
+    def print_pretty_json_lines_info(self):
+        print(self.name)
+        print(len(self.json_lines))
+    # if k.name == "malaria":
+    #     for kjq in k.json_quotes:
+    #         json_line = json.loads(kjq)
+    #         print("\n\n" + json_line['quotation'])
+
 
 class Topics:
 
@@ -75,6 +83,7 @@ class Topics:
                 return k
 
     def write_matching_quotes_to_file_for_year(self, year_index):
+        #TODO from speaker and URL --> add json parameter for country
         for k in self.keywords:
             self.assign_quote_to_file_for_year(k, year_index)
 
