@@ -24,7 +24,7 @@ For research question four, we also need data on the GDP of countries and the co
 
 To estimate asymmetries between media coverage and actual death causes, we have two main challenges.
 
-- **1. Quote categorization**: To accurately categorize the quotes to causes of death, we compare keywords for each death cause with the quotes. The process will be optimized by analyzing a sample of the classified quotes, and then modifying the keywords we use. We are currently just comparing strings in Python, but we plan on using The Fuzz, available here: https://github.com/seatgeek/thefuzz, which will allow us to include misspelled words or other slight modifications. For Milestone 1, we are not using The Fuzz because reading and comparing the quotes take too long, but we will try to optimize this process in Milestone 2. Examples of the preliminary keywords we use to extract relevant quotes are:
+- **1. Quote categorization**: To accurately categorize the quotes to causes of death, we compare keywords for each death cause with the quotes. The process will be optimized by analyzing a sample of the classified quotes, and then modifying the keywords we use. We are currently just comparing strings in Python, but we plan on using The Fuzz, available here: https://github.com/seatgeek/thefuzz, which will allow us to include misspelled words or other slight modifications. For Milestone 2, we are not using The Fuzz because reading and comparing the quotes take too long, but we will try to optimize this process in Milestone 3. Examples of the preliminary keywords we use to extract relevant quotes are:
 
   - Diarrheal: dierrhea, cholera, etec, rotavirus, shigellosis, typhoid
 
@@ -42,7 +42,7 @@ Once we have answers to these two strategies, we will develop our methods for th
 
 - Week 48: The goal is to have an initial analysis made on each death cause and to have preliminary results, e.g., results concerning the first of our research questions, and to have the structure in place to go further in our analysis.
 
-- Week 49: More in-depth analysis made and research carried out concerning the rest of our research questions.
+- Week 49: More in-depth analysis made and research carried out concerning the rest of our research questions (2-5). The feasibility of research question four will be examined, and we may have to drop this due to lack of diversity based on the GDP of the origin countries of speakers. To do research question 3, we will also have to add more datasets from Our World in Data that includes age groups.
 
 - Week 50: Finishing up the project – working on presenting and visualizing the results.
 
