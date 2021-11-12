@@ -14,7 +14,7 @@ class Keyword:
     def __init__(self, name):
         self.name = name
         self.output_filenames = []
-        self.json_quotes = []
+        self.json_lines = []
         self.quotes = pd.DataFrame(columns = ["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas","urls","phase"])
         self.synonym = []
 
@@ -30,6 +30,10 @@ class Keyword:
                 if syn in lowercase_quotation:
                     return True
         return False
+
+    def pop_everything(self):
+        self.json_lines.clear()
+
 
 class Topics:
 
@@ -64,14 +68,34 @@ class Topics:
                 keywords_line = lowercase_line.replace("\n", "").split("<>")
                 self.keywords.append(Keyword(keywords_line[0]))
                 self.keywords[i].synonym = keywords_line[1:]
+               
+    def match_quotation_with_any_keyword(self, quotation) -> Keyword:
+        for k in self.keywords:
+            if k.find_keyword_in_quotation(quotation):
+                return k
+
+    def write_matching_quotes_to_file_for_year(self, year_index):
+        for k in self.keywords:
+            self.assign_quote_to_file_for_year(k, year_index)
+
+
+    def assign_quote_to_file_for_year(self, keyword, year_index):
+        with bz2.open(keyword.output_filenames[year_index], 'wb') as output_file:
+            for line in keyword.json_lines:
+                output_file.write((json.dumps(json.loads(line))+'\n').encode('utf-8'))
+        output_file.close()
+
+    def delete_json_line_for_all_keywords(self):
+        for k in self.keywords:
+            k.pop_everything()
 
     def print_pretty_keywords(self):
-        for tk in self.keywords:
-            print("\nPrinting keyword")
-            print(tk.name)
-            for i, tks in enumerate(tk.synonym):
-                if i == 0: print("Printing synonyms")
-                print("\t" + tks)
+            for tk in self.keywords:
+                print("\nPrinting keyword")
+                print(tk.name)
+                for i, tks in enumerate(tk.synonym):
+                    if i == 0: print("Printing synonyms")
+                    print("\t" + tks)
 
     def print_pretty_keywords_years(self):
         for tk in self.keywords:
@@ -80,14 +104,4 @@ class Topics:
             for i, tks in enumerate(tk.output_filenames):
                 if i == 0: print("Printing filenames")
                 print("\t" + tks)
-               
-    def match_quotation_with_any_keyword(self, quotation) -> Keyword:
-        for k in self.keywords:
-            if k.find_keyword_in_quotation(quotation):
-                return k
-    
-    def assign_quote_to_file(self, keyword, index, line):
-        key = self.get_keyword_by_name(keyword)
-        with bz2.open(key.output_filenames[index], 'wb') as output_file:
-            output_file.write((json.dumps(json.loads(line))+'\n').encode('utf-8'))
-        output_file.close()
+
