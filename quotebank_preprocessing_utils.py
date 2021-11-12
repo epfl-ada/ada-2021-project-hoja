@@ -8,7 +8,7 @@ Python Version: 3.8
 
 import os
 import json
-from constants import DATA_PATH, GENERATED_PATH
+from src.CONSTS import DATA_PATH, GENERATED_PATH
 
 
 def compose_quotebank_filenames() -> list:
@@ -30,12 +30,7 @@ def create_directories_for_every_year():
     for i in range(8, 18):
         year = create_year_string_from_number(i)
         path = GENERATED_PATH + year + "/"
-
-        try:
-            os.mkdir(path)
-            print("Created Directory at: " + path)
-        except OSError:
-            continue
+        os.makedirs(path, exist_ok = True)
 
 
 def format_filenames_nicely(filename) -> str:
