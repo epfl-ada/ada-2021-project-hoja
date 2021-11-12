@@ -1,5 +1,17 @@
+"""
+File name: QuoteBankData.py
+Author: HOJA
+Date created: 1/11/2021
+Date last modified: 12/11/2021
+Python Version: 3.8
+"""
+
 from src.Keyword import Keyword
 from src.CONSTS import KEYWORDS_FILE_PATH, GENERATED_PATH
+import quotebank_preprocessing_utils as utils
+import pandas as pd
+
+
 class QuoteBankData:
 
     def __init__(self, name: str, keywords: []):

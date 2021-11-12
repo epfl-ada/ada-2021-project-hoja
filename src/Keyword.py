@@ -1,3 +1,16 @@
+"""
+File name: Keyword.py
+Author: HOJA
+Date created: 1/11/2021
+Date last modified: 12/11/2021
+Python Version: 3.8
+"""
+
+import pandas as pd
+import json
+import bz2
+
+
 class Keyword:
 
     def __init__(self, name):
