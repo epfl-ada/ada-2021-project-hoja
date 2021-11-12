@@ -74,20 +74,20 @@ class Topics:
             if k.find_keyword_in_quotation(quotation):
                 return k
 
-    def write_matching_quotes_to_file(self):
-        pass
+    def write_matching_quotes_to_file_for_year(self, year_index):
+        for k in self.keywords:
+            self.assign_quote_to_file_for_year(k, year_index)
 
-    def assign_quote_to_file(self, keyword, year_index, line):
-        key = self.get_keyword_by_name(keyword)
-        with bz2.open(key.output_filenames[year_index], 'wb') as output_file:
-            output_file.write((json.dumps(json.loads(line))+'\n').encode('utf-8'))
+
+    def assign_quote_to_file_for_year(self, keyword, year_index):
+        with bz2.open(keyword.output_filenames[year_index], 'wb') as output_file:
+            for line in keyword.json_lines:
+                output_file.write((json.dumps(json.loads(line))+'\n').encode('utf-8'))
         output_file.close()
 
     def delete_json_line_for_all_keywords(self):
-        pass
-        # iterate through all keywords
-            # for each keyword call pop_everything(self):
-
+        for k in self.keywords:
+            k.pop_everything()
 
     def print_pretty_keywords(self):
             for tk in self.keywords:
