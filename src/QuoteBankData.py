@@ -45,7 +45,7 @@ class QuoteBankData:
         The first element of the line parsed gets assigned to keyword name, whereas the following will be considered
         as synonyms
         """
-        with open(KEYWORDS_FILE_PATH, "r") as file:
+        with open("./data/keywords.txt", "r") as file:
             textfile = file.readlines()
 
             for i, line in enumerate(textfile):
@@ -75,7 +75,7 @@ class QuoteBankData:
         for k in self.keywords:
             k.assign_quote_to_file_for_year(year_index)
 
-    def delete_json_lines_for_all_keywords(self):
+    def delete_json_lines_for_all_keywords(self, debug_printing, year_index):
         """
         Clear all the json_lines associated to every keyword
         """
