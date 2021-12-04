@@ -1,1 +1,5 @@
 pandas==1.2.4
+qwikidata==0.4.0
+pywikibot==6.6.3
+wikitextparser==0.47.9
+
