@@ -5,10 +5,8 @@ from src.CONSTS import *
 from src.utilities import quotebank_preprocessing_utils as utils
 from tqdm import tqdm
 
-COLORS = ["red", "green", "blue", "brown", "yellow", "purple", "orange", "pink"]
 
-
-#TODO: refactoring this
+# TODO: refactoring this
 
 def quotation_classification():
     """
