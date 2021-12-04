@@ -7,8 +7,6 @@ from src.utilities import synonym_utils as syn_utils
 from tqdm import tqdm
 
 
-# TODO: refactoring this
-
 def quotation_classification():
     """
     Iterate through all quotebank files, stored locally. For each quote inside the file, check which keywords match.

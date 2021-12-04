@@ -11,3 +11,5 @@ DATA_PATH = './data/'
 KEYWORDS_FILE_PATH = DATA_PATH + "keywords.txt"
 COUNTRY_EXTENSIONS_FILE_PATH = DATA_PATH + "country_url_end.txt"
 COLORS = ["red", "green", "blue", "brown", "yellow", "purple", "orange", "pink"]
+BEGIN_YEAR = 2008
+END_YEAR = 2017

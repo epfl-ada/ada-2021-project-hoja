@@ -8,7 +8,10 @@ Python Version: 3.8
 
 import os
 import json
-from src.CONSTS import DATA_PATH, GENERATED_PATH
+from src.CONSTS import DATA_PATH, GENERATED_PATH, BEGIN_YEAR, END_YEAR
+
+begin_year = BEGIN_YEAR - 2000
+end_year = (END_YEAR - 2000) + 1
 
 
 def compose_quotebank_filenames() -> list:
@@ -17,7 +20,7 @@ def compose_quotebank_filenames() -> list:
     :return: list
     """
     quotes_file_list = []
-    for i in range(8, 18):
+    for i in range(begin_year, end_year):
         year = create_year_string_from_number(i)
         quotes_file_list.append(DATA_PATH + "quotes-" + year + ".json.bz2")
     return quotes_file_list
@@ -27,10 +30,12 @@ def create_directories_for_every_year():
     """
     For each year, create the corresponding directory where all the output files of each keyword will be stored
     """
-    for i in range(8, 18):
+    for i in range(begin_year, end_year):
         year = create_year_string_from_number(i)
         path = GENERATED_PATH + year + "/"
         os.makedirs(path, exist_ok = True)
+
+# TODO: create utils file for only managing strings called: string_utils.py
 
 
 def format_filenames_nicely(filename) -> str:
@@ -66,7 +71,7 @@ def get_all_years() -> list:
     :return: list
     """
     years_for_file = []
-    for i in range(8, 18):
+    for i in range(begin_year, end_year):
         year = create_year_string_from_number(i)
         years_for_file.append(year)
 
