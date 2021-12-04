@@ -59,6 +59,8 @@ class QuoteBankData:
         #                 self.keywords[i].synonym = keywords_line[1:]
         #
         # =============================================================================
+
+        # TODO this part must conform 
         with open(KEYWORDS_FILE_PATH[-3] + "json", "r") as file:
             keywords = json.load(file)
 
