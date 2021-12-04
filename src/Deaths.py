@@ -1,5 +1,5 @@
 """
-File name: Keyword.py
+File name: Deaths.py
 Author: HOJA
 Date created: 1/11/2021
 Date last modified: 12/11/2021

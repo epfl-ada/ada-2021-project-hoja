@@ -22,6 +22,7 @@ def quotation_classification():
         quotebank.write_matching_quotes_to_file_for_year(index)
         quotebank.delete_json_lines_for_all_keywords()
 
+
 def quotation_classification_for_file(filename):
     """
     For every line of the input file (json file), extract the quotation.
@@ -35,12 +36,12 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-           # if i == 100000: break
+            # if i == 100000: break
             quotation = utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:
-              for found_keyword in found_keywords:
-                found_keyword.json_lines.append(line)
+                for found_keyword in found_keywords:
+                    found_keyword.json_lines.append(line)
 
 
 # START
