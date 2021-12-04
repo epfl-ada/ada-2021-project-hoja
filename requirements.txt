@@ -3,3 +3,7 @@ qwikidata==0.4.0
 pywikibot==6.6.3
 wikitextparser==0.47.9
 
+
+requests~=2.25.1
+nltk~=3.6.1
+tqdm~=4.59.0
