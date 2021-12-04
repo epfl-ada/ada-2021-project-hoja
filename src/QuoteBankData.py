@@ -13,7 +13,7 @@ import pandas as pd
 import json
 
 
-#TODO: change class name
+# TODO: change class name
 class QuoteBankData:
 
     def __init__(self, name: str, keywords: []):
@@ -47,27 +47,24 @@ class QuoteBankData:
         The first element of the line parsed gets assigned to keyword name, whereas the following will be considered
         as synonyms
         """
-# =============================================================================
-#         
-#         with open(KEYWORDS_FILE_PATH, "r") as file:
-#             textfile = file.readlines()
-# 
-#             for i, line in enumerate(textfile):
-#                 lowercase_line = line.lower()
-#                 keywords_line = lowercase_line.replace("\n", "").split("<>")
-#                 self.keywords.append(Keyword(keywords_line[0]))
-#                 self.keywords[i].synonym = keywords_line[1:]
-#                 
-# =============================================================================
+        # =============================================================================
+        #
+        #         with open(KEYWORDS_FILE_PATH, "r") as file:
+        #             textfile = file.readlines()
+        #
+        #             for i, line in enumerate(textfile):
+        #                 lowercase_line = line.lower()
+        #                 keywords_line = lowercase_line.replace("\n", "").split("<>")
+        #                 self.keywords.append(Keyword(keywords_line[0]))
+        #                 self.keywords[i].synonym = keywords_line[1:]
+        #
+        # =============================================================================
         with open(KEYWORDS_FILE_PATH[-3] + "json", "r") as file:
-            
-          keywords = json.load(file)
-          
-          for i, key in enumerate(keywords.keys()):
-            self.keywords.append(Keyword(key))
-            self.keywords[i].synonym = keywords[key]
-        
-        
+            keywords = json.load(file)
+
+            for i, key in enumerate(keywords.keys()):
+                self.keywords.append(Keyword(key))
+                self.keywords[i].synonym = keywords[key]
 
     def match_quotation_with_any_keyword(self, quotation) -> [Keyword]:
         """
