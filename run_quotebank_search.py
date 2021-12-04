@@ -12,6 +12,9 @@ from tqdm import tqdm
 
 COLORS = ["red", "green", "blue", "brown", "yellow", "purple", "orange", "pink"]
 
+
+#TODO: refactoring this
+
 def quotation_classification():
     """
     Iterate through all quotebank files, stored locally. For each quote inside the file, check which keywords match.

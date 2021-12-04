@@ -20,6 +20,9 @@ from nltk.corpus import wordnet as wn
 import time
 
 
+#TODO: refactoring this
+
+
 def compose_quotebank_filenames() -> list:
     """
     Compose all the quotebank filenames to be read

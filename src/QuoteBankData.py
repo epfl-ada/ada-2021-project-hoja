@@ -14,6 +14,7 @@ import json
 import sys
 
 
+#TODO: change class name
 class QuoteBankData:
 
     def __init__(self, name: str, keywords: []):
