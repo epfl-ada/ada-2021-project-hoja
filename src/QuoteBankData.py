@@ -8,10 +8,9 @@ Python Version: 3.8
 
 from src.Keyword import Keyword
 from src.CONSTS import KEYWORDS_FILE_PATH, GENERATED_PATH
-import quotebank_preprocessing_utils as utils
+from src.utilities import quotebank_preprocessing_utils as utils
 import pandas as pd
 import json
-import sys
 
 
 #TODO: change class name
