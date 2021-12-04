@@ -3,6 +3,7 @@ import bz2
 from src.QuoteBankData import QuoteBankData
 from src.CONSTS import *
 from src.utilities import quotebank_preprocessing_utils as utils
+from src.utilities import synonym_utils as syn_utils
 from tqdm import tqdm
 
 
@@ -20,7 +21,7 @@ def quotation_classification():
         quotation_classification_for_file(filename)
         quotebank.write_matching_quotes_to_file_for_year(index)
         quotebank.delete_json_lines_for_all_keywords()
-        
+
 def quotation_classification_for_file(filename):
     """
     For every line of the input file (json file), extract the quotation.
@@ -40,9 +41,11 @@ def quotation_classification_for_file(filename):
             if len(found_keywords) > 0:
               for found_keyword in found_keywords:
                 found_keyword.json_lines.append(line)
-                    
+
+
 # START
-utils.add_new_synonyms(KEYWORDS_FILE_PATH)
+
+syn_utils.add_new_synonyms(KEYWORDS_FILE_PATH)
 
 quotebank = QuoteBankData("Asymmetry of News", [])
 quotebank.read_keywords_from_file()
