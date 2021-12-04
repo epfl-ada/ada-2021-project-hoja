@@ -1,33 +1,33 @@
 Meningitis<>meningitis<>inflammation of the protective membranes<>swelling of the protective membranes
-Lower respiratory infections<>lower respiratory infections<>pneumonia<>bronchitis<>tuberculosis
-Intestinal infectious diseases<>intestinal infectious diseases<>cholera<>typhoid fever<>paratyphoid fever<>salmonella infections<>shigellosis<>botulism<>gastroenteritis<>amoebiasis
-Protein-energy malnutrition<>protein-energy undernutrition<>protein-energy malnutrition<>energy undernutrition<>protein undernutrition<>protein malnutrition<>energy malnutrition
+Lower respiratory infection<>lower respiratory infections<>pneumonia<>bronchitis<>tuberculosis
+Intestinal infectious disease<>intestinal infectious diseases<>cholera<>typhoid fever<>paratyphoid fever<>salmonella infections<>shigellosis<>botulism<>gastroenteritis<>amoebiasis
+Protein-energy malnutrition<>protein-energy undernutrition<>protein-energy malnutrition<>energy undernutrition<>protein undernutrition<>protein malnutrition<>energy malnutrition<>Kwashiorkor<>Marasmus<>Marasmic kwashiorkor
 Terrorism<>terrorist<>isis<>al-qa'ida<>boko haram<>suicide bomber<>al-shabaab
-Cardiovascular diseases<>heart attack <>heart failure<>stroke<>vacular disease<>heart disease<>aorta disease<>abnormal heart rythms<>arrhythmia<>deep vein thrombosis<>pulmonary embolism<>cardiomyopathy<>heart muscle disease
+Cardiovascular disease<>heart attack <>heart failure<>stroke<>vacular disease<>heart disease<>aorta disease<>abnormal heart rythms<>arrhythmia<>deep vein thrombosis<>pulmonary embolism<>cardiomyopathy<>heart muscle disease
 Alzheimer disease and other dementias<>alzheimer<>dementia
 Chronic kidney disease<>kidney disease<>kidney failure<>renal disease
-Chronic respiratory diseases<>asthma<>chronic obstructive pulmonary disorder<>cystic fibrosis<>lung cancer<>sleep apnea
-Cirrhosis and other chronic liver diseases<>chronic liver diseases<>cirrhosis<>alcoholic liver disease<>chronic viral hepatitis<>hepatitis b<>hepatatis c<>non-alcoholic fatty liver disease<>hemochromatosis
-Digestive diseases<>gastroesophageal reflux disease<>gallstones<>celiac disease<>crohn’s disease<>ulcerative colitis<>hemorrhoids<>irritable bowel syndrome<>diverticulitis<>anal fissure
+Chronic respiratory disease<>asthma<>chronic obstructive pulmonary disorder<>cystic fibrosis<>lung cancer<>sleep apnea
+Cirrhosis and other chronic liver disease<>chronic liver diseases<>cirrhosis<>alcoholic liver disease<>chronic viral hepatitis<>hepatitis b<>hepatatis c<>non-alcoholic fatty liver disease<>hemochromatosis
+Digestive disease<>gastroesophageal reflux disease<>gallstones<>celiac disease<>crohn’s disease<>ulcerative colitis<>hemorrhoids<>irritable bowel syndrome<>diverticulitis<>anal fissure
 Hepatitis<>hepatatis<>inflammation of the liver<>liver inflammation
-Neoplasms<>neoplasm<>adenoma<>fibroadenoma<>leiomyoma
+Neoplasms<>neoplasm<>adenoma<>fibroadenoma<>leiomyoma<>cancer
 Parkinson disease<>parkinson
-Fire, heat, and hot substances<>freeze death<>freeze to death<>heat wave<>hot substance
+Fire, heat, and hot substances<>freeze death<>freeze to death<>heat wave<>hot substance<>Heat illness<>Heat exhaustion<>Heat edema<>Heat cramps<>Heat syncope<>Heat stroke<>Heat rash<>Heat tetany<>Hypothermia<>hyperthermia<>Chilblains<>frostbite<>frostnip<>Trench foot<>fire
 Malaria<>malaria<>ague<>jungle fever<>marsh fever<>swamp fever<>paludism
 Drowning<>drowning<>suffocate in water
-Interpersonal violence<>intimate partner violence<>domestic violence<>battering<>interpersonal violence<>relationship violence<>sexual violence
+Interpersonal violence<>intimate partner violence<>domestic violence<>battering<>interpersonal violence<>relationship violence<>sexual violence<>homocide
 HIV/AIDS<>hiv<>aids<>human immunodeficiency viruses<>immunodeficiency syndrome
-Drug use disorders<>overdose<>drug death<>drug use disorders
+Drug use disorder<>overdose<>drug death<>drug use disorders
 Tuberculosis<>tuberculosis<>phthisis<>scrofula
-Road injuries<>car crash<>road injury<>road injuries<>traffic death<>traffic crash<>car collision<>road collision<>road accident<>car accident
-Maternal disorders<>maternal disorders<>diabetes<>hyperthyroidism<>hypothyroidism<>phenylketonuria<>lupus erythematosus<>epilepsy
-Neonatal disorders<>neonatal disorders<>achondroplasia<>angelman syndrome<>cockayne syndrome<>cystic fibrosis<>digeorge syndrome<>fragile x syndrome<>marfan syndrome<>prader-willi syndrome<>severe combined immunodeficiency<>waardenburg syndrome<>werner syndrome<>williams syndrome<>zellweger syndrome
-Alcohol use disorders<>alcohol use disorders<>alcoholism<>binge drinking
-Exposure to forces of nature<>forces of nature<>earthquakes<>volcanic eruptions<>avalanches<>storms<>lightning strikes<>floods
+Road injury<>car crash<>road injury<>road injuries<>traffic death<>traffic crash<>car collision<>road collision<>road accident<>car accident
+Maternal disorder<>maternal disorders<>diabetes<>hyperthyroidism<>hypothyroidism<>phenylketonuria<>lupus erythematosus<>epilepsy<>Cytomegalovirus<>Strep B<>Thyroid<>Toxoplasmosis<>Rubella<>birth defect
+Neonatal disorder<>neonatal disorders<>achondroplasia<>angelman syndrome<>cockayne syndrome<>cystic fibrosis<>digeorge syndrome<>fragile x syndrome<>marfan syndrome<>prader-willi syndrome<>severe combined immunodeficiency<>waardenburg syndrome<>werner syndrome<>williams syndrome<>zellweger syndrome
+Alcohol use disorder<>alcohol use disorders<>alcoholism<>binge drinking
+Exposure to forces of nature<>forces of nature<>earthquakes<>volcanic eruptions<>avalanches<>storm<>lightning strike<>flood<>tsunami<>hurricane<>typhoon
 Diarrheal diseases<>dierrhea<>cholera<>etec<>rotavirus<>shigellosis<>typhoid
-Environmental heat and cold exposure<>freezing<>heat exposure<>cold exposure
-Nutritional deficiencies<>undernutrition<>malnutrition<>nutritional deficiencies<>nutritional deficiencyiron deficiency<>iodine deficiency<>vitamin d deficiency<>vitamin b12 deficiency<>calcium deficiency<>vitamin a deficiency<>magnesium deficiency
-Self-harm<>self-harm<>hurting themselves<>hurting himself<>hurting herself
+Environmental heat and cold exposure<>freezing<>heat exposure<>cold exposure<>forest fire
+Nutritional deficiency<>undernutrition<>malnutrition<>nutritional deficiencies<>nutritional deficiency<>iron deficiency<>iodine deficiency<>vitamin d deficiency<>vitamin b12 deficiency<>calcium deficiency<>vitamin a deficiency<>magnesium deficiency<>Nutrient deficiency<>
+Self-harm<>self-harm<>hurting themselves<>hurting himself<>hurting herself<>suicide
 Conflict and terrorism<>conflict<>terrorism<>war
 Diabetes mellitus<>diabetes
 Poisonings<>poisoning<>poisoned
