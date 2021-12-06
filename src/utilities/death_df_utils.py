@@ -51,7 +51,7 @@ def percentage_of_total_deaths(df, columns):
     return df
 
 
-def predict_nan_values(df, quant_columns):
+def update_nan_values(df, quant_columns):
     """
     Use linear regression based on the values from the other years to predict a value for all NaN cells.
     """
@@ -68,22 +68,47 @@ def predict_nan_values(df, quant_columns):
         
         X = np.array(train_data)[:,0].reshape(-1,1)
         y = np.array(train_data)[:,1].reshape(-1,1)
-            
-        pred_years = np.array(pred_years).reshape(-1,1)
-
-        regsr = LinearRegression()
-        regsr.fit(X,y)
-        predicted_values = regsr.predict(pred_years)
         
+        pred_years, predicted_values, regsr = predict_col_nan_values(X, y, pred_years)
         plot_predicted_values(X, y, pred_years, predicted_values, regsr, col)
-
-        for i, val in enumerate(predicted_values):
-            df.loc[df['Year'] == pred_years[i][0], col] = predicted_values[i][0]
+        df = update_col_nan_values(df, pred_years, predicted_values, col)
 
     return df
 
 
+def predict_col_nan_values(X, y, pred_years):
+    """
+    Predicts col nan values with linear regression.
+    """
+        
+    pred_years = np.array(pred_years).reshape(-1,1)
+    predicted_values, regsr = pred_with_linear_regression(X, y, pred_years)
+    
+    return pred_years, predicted_values,regsr
+
+
+def pred_with_linear_regression(X, y, pred):
+    """
+    General linear regression model and prediction.
+    """
+    regsr = LinearRegression()
+    regsr.fit(X,y)
+    return regsr.predict(pred), regsr
+
+
+def update_col_nan_values(df, x, y, col):
+    """
+    Replace nan values with predicted values for a column.
+    """
+    for i, val in enumerate(y):
+        df.loc[df['Year'] == x[i][0], col] = y[i][0]
+    return df
+
+
 def plot_predicted_values(X, y, to_predict_x, predicted_y, regsr, col):
+    """
+    Plot predicted values in green, trend line in red and training values in blue.
+    """
     
     m = regsr.coef_
     c = regsr.intercept_

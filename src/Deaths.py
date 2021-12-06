@@ -25,12 +25,11 @@ class Deaths:
     def modify_df(self, df, rename_cols, drop_cols):
         
         df = modify_cols(df, rename_cols, drop_cols)
-        
         self.columns = df.columns
         self.quant_columns =  [col for col in self.columns if col not in DEATHS_INFO_COLUMNS]
-        
         df = extract_world_data(df)
-        df = predict_nan_values(df, self.quant_columns)
+        
+        df = update_nan_values(df, self.quant_columns)
         
         return df
     
