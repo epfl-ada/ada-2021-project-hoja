@@ -16,7 +16,7 @@ import json
 # TODO: change class name
 class QuoteBankData:
 
-    def __init__(self, name: str, keywords: []):
+    def __init__(self, name: str, keywords: list):
         self.name = name
         self.keywords = keywords
         self.quotes_occurrences_df = pd.DataFrame()
@@ -68,7 +68,7 @@ class QuoteBankData:
                 self.keywords.append(Keyword(key))
                 self.keywords[i].synonym = keywords[key]
 
-    def match_quotation_with_any_keyword(self, quotation) -> [Keyword]:
+    def match_quotation_with_any_keyword(self, quotation) -> list:
         """
         Given a quotation return the matching keyword, if any
         :param quotation: str
