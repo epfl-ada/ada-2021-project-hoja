@@ -218,5 +218,5 @@ def add_new_synonyms(filename):
 
         keywords[key] = list(set(keywords[key]))
 
-        with open(filename[:-3] + 'json', 'w') as fp:
+        with open(filename, 'w+') as fp:
             json.dump(keywords, fp)
