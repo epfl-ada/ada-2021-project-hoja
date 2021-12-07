@@ -22,7 +22,7 @@ def modify_cols(df, rename_cols = {}, drop_cols=[]):
     cols = list(df.columns)
     for i, col in enumerate(cols):
         if len(col.split(" - ")) > 1:
-            rename_cols[col] = col.split(" - ")[1].strip()
+            rename_cols[col] = col.split(" - ")[1].strip().replace(" ", "_")
     df = df.rename(columns=rename_cols)
     df = df.reset_index(drop=True)
     return df

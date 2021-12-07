@@ -7,7 +7,7 @@ Python Version: 3.8
 """
 
 from src.Keyword import Keyword
-from src.CONSTS import KEYWORDS_FILE_PATH, GENERATED_PATH
+from src.CONSTS import KEYWORDS_JSON_FILE_PATH, GENERATED_PATH
 from src.utilities import quotebank_preprocessing_utils as utils
 import pandas as pd
 import json
@@ -61,7 +61,7 @@ class QuoteBankData:
         # =============================================================================
 
         # TODO this part must conform 
-        with open(KEYWORDS_FILE_PATH[-3] + "json", "r") as file:
+        with open(KEYWORDS_JSON_FILE_PATH, "r") as file:
             keywords = json.load(file)
 
             for i, key in enumerate(keywords.keys()):
