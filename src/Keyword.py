@@ -30,12 +30,10 @@ class Keyword:
         lowercase_quotation = quotation.lower()
         lowercase_quotation_list = lowercase_quotation.split(" ")
         for syn in self.synonym:
-            if len(syn.split(" ")) == 1:
-                if syn in lowercase_quotation_list:
-                    return True
-            else:
-                if syn in lowercase_quotation:
-                    return True
+            syn = syn.split(" ")
+              if set(syn).issubset(lowercase_quotation_list):
+                return True
+                  
         return False
 
     def assign_quote_to_file_for_year(self, year_index):

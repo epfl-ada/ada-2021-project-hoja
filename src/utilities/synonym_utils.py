@@ -18,66 +18,7 @@ nltk.download('wordnet')
 from nltk.corpus import wordnet as wn
 import time
 
-
-def get_all_synonyms(words):
-    """
-    Gets all related words to the input words via the wordnet databank. Relations are hyponyms and derivationally derived words.
-    The first synset is taken to be the the correct synset to use.
-    :param words: list
-    :return output_words: list
-    """
-
-    output_words = []
-
-    synsets = []
-    for word in words:
-        synsets.extend(wn.synsets(word))
-
-    if synsets:
-        synset_words = [synsets[0]]
-
-        lemma_words = []
-        output_lemmas = []
-
-        while len(synset_words) > 0 or len(lemma_words) > 0:
-            # for i in range(20):
-
-            if len(synset_words) > 0:
-
-                # take first word on the list for new search
-                current_search = synset_words[0]
-                # remove word from search list
-                synset_words.remove(current_search)
-
-                synset_words.extend(current_search.hyponyms())
-                # synset_words.extend(current_search.member_holonyms())
-
-                new_found = list()
-                new_found.extend(current_search.lemmas())
-                for item in new_found:
-                    if item not in output_lemmas:
-                        lemma_words.append(item)
-
-            if len(lemma_words) > 0:
-                # take first word on the list for new search
-                current_search = lemma_words[0]
-                # Add the word to output list
-                output_words.append(current_search.name().replace("_", " "))
-                output_lemmas.append(current_search)
-                # remove word from search list
-                lemma_words.remove(current_search)
-
-                new_found = list()
-                new_found.extend(current_search.derivationally_related_forms())
-
-                for item in new_found:
-                    if item not in output_lemmas:
-                        lemma_words.append(item)
-
-    return output_words
-
-
-"""Functions of increasing number of keywords"""
+"""Functions for increasing number of keywords"""
 
 
 def get_identifier(item) -> str:
@@ -108,7 +49,7 @@ def get_aliases_wikidata(words) -> list:
     :return : list
     """
 
-    aliases = list()
+    alias = list()
 
     for word in words:
         identifier = get_identifier(word)
@@ -119,14 +60,17 @@ def get_aliases_wikidata(words) -> list:
 
             if not item.isRedirectPage():
                 if "en" in item.aliases:
-                    aliases.extend(item.aliases["en"])
-
-    return aliases
+                    alias.extend(item.aliases["en"])
+    
+    alias = [ali.lower() for ali in alias]
+    return alias
 
 
 def get_all_synonyms(words) -> list:
     """
-    Gets all related words to the input words via the wordnet databank. Relations are hyponyms and derivationally derived words.
+    Gets all related words to the input words via the wordnet databank.
+    
+    Relations are hyponyms and derivationally derived words.
     The first synset is taken to be the the correct synset to use.
     :param words: list
     :return output_words: list
@@ -138,7 +82,9 @@ def get_all_synonyms(words) -> list:
         synsets.extend(wn.synsets(word))
 
     if synsets:
-        synset_words = [synsets[0]]
+        synset_words = synsets[0]   
+        """To get everything, potentially lots of unrelated words, change the line above to:
+          synset_words = synsets""" 
 
         lemma_words = []
         output_lemmas = []
@@ -166,7 +112,8 @@ def get_all_synonyms(words) -> list:
                 # take first word on the list for new search
                 current_search = lemma_words[0]
                 # Add the word to output list
-                output_words.append(current_search.name().replace("_", " "))
+                lemma_name_no_underscore_lowercase = current_search.name().replace("_", " ").lower()
+                output_words.append(lemma_name_no_underscore_lowercase)
                 output_lemmas.append(current_search)
                 # remove word from search list
                 lemma_words.remove(current_search)
@@ -186,6 +133,7 @@ def read_keywords(filename) -> dict():
 
     with open(filename) as file:
         for line in file:
+            line = line.lower()
             line = line.replace("\n", "")
             line = line.split('<>')
             keywords[line[0]] = line
@@ -193,14 +141,14 @@ def read_keywords(filename) -> dict():
     return keywords
 
 
-def add_new_synonyms(filename):
+def add_new_synonyms(inputfilename, outputfilename):
     """
     This function extends the keywords given in the txt file of filename.
     The output is saved as a json file under the same name as filename.
     :param words: str
     """
 
-    keywords = read_keywords(filename)
+    keywords = read_keywords(inputfilename)
 
     start = time.time()
     for key in keywords.keys():
@@ -218,5 +166,5 @@ def add_new_synonyms(filename):
 
         keywords[key] = list(set(keywords[key]))
 
-        with open(filename, 'w+') as fp:
+        with open(outputfilename, 'w+') as fp:
             json.dump(keywords, fp)

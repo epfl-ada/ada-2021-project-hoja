@@ -34,7 +34,7 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-            # if i == 100000: break
+            if i == 100000: break
             quotation = utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:
@@ -44,7 +44,7 @@ def quotation_classification_for_file(filename):
 
 # START
 
-syn_utils.add_new_synonyms(KEYWORDS_JSON_FILE_PATH)
+syn_utils.add_new_synonyms(KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH)
 
 quotebank = QuoteBankData("Asymmetry of News", [])
 quotebank.read_keywords_from_file()
