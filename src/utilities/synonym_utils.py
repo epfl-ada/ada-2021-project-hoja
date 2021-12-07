@@ -12,11 +12,11 @@ from qwikidata.json_dump import WikidataJsonDump
 from qwikidata.utils import dump_entities_to_json
 import pywikibot
 import requests
-import nltk
-
-nltk.download('wordnet')
 from nltk.corpus import wordnet as wn
 import time
+
+import nltk
+nltk.download('wordnet')
 
 
 def get_all_synonyms(words):
@@ -218,5 +218,5 @@ def add_new_synonyms(filename):
 
         keywords[key] = list(set(keywords[key]))
 
-        with open(filename, 'w+') as fp:
+        with open("." + filename, 'w+') as fp: #TODO fix this path
             json.dump(keywords, fp)
