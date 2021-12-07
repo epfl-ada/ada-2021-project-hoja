@@ -184,7 +184,7 @@ def get_all_synonyms(words) -> list:
 def read_keywords(filename) -> dict():
     keywords = dict()
 
-    with open(filename) as file:
+    with open("." + filename) as file: #TODO: fix file path
         for line in file:
             line = line.replace("\n", "")
             line = line.split('<>')
