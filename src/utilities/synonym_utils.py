@@ -184,7 +184,7 @@ def get_all_synonyms(words) -> list:
 def read_keywords(filename) -> dict():
     keywords = dict()
 
-    with open("." + filename) as file: #TODO: fix file path
+    with open(filename, "r") as file: #TODO: fix file path
         for line in file:
             line = line.replace("\n", "")
             line = line.split('<>')
@@ -193,14 +193,14 @@ def read_keywords(filename) -> dict():
     return keywords
 
 
-def add_new_synonyms(filename):
+def add_new_synonyms(input_filename, outpu_filename):
     """
     This function extends the keywords given in the txt file of filename.
     The output is saved as a json file under the same name as filename.
     :param words: str
     """
 
-    keywords = read_keywords(filename)
+    keywords = read_keywords(input_filename)
 
     start = time.time()
     for key in keywords.keys():
@@ -218,5 +218,5 @@ def add_new_synonyms(filename):
 
         keywords[key] = list(set(keywords[key]))
 
-        with open("." + filename, 'w+') as fp: #TODO fix this path
+        with open(outpu_filename, 'w+') as fp: #TODO fix this path
             json.dump(keywords, fp)
