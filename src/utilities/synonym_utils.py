@@ -15,73 +15,11 @@ import requests
 from nltk.corpus import wordnet as wn
 import time
 
-<<<<<<< HEAD
-"""Functions for increasing number of keywords"""
-=======
 import nltk
 nltk.download('wordnet')
 
 
-def get_all_synonyms(words):
-    """
-    Gets all related words to the input words via the wordnet databank. Relations are hyponyms and derivationally derived words.
-    The first synset is taken to be the the correct synset to use.
-    :param words: list
-    :return output_words: list
-    """
-
-    output_words = []
-
-    synsets = []
-    for word in words:
-        synsets.extend(wn.synsets(word))
-
-    if synsets:
-        synset_words = [synsets[0]]
-
-        lemma_words = []
-        output_lemmas = []
-
-        while len(synset_words) > 0 or len(lemma_words) > 0:
-            # for i in range(20):
-
-            if len(synset_words) > 0:
-
-                # take first word on the list for new search
-                current_search = synset_words[0]
-                # remove word from search list
-                synset_words.remove(current_search)
-
-                synset_words.extend(current_search.hyponyms())
-                # synset_words.extend(current_search.member_holonyms())
-
-                new_found = list()
-                new_found.extend(current_search.lemmas())
-                for item in new_found:
-                    if item not in output_lemmas:
-                        lemma_words.append(item)
-
-            if len(lemma_words) > 0:
-                # take first word on the list for new search
-                current_search = lemma_words[0]
-                # Add the word to output list
-                output_words.append(current_search.name().replace("_", " "))
-                output_lemmas.append(current_search)
-                # remove word from search list
-                lemma_words.remove(current_search)
-
-                new_found = list()
-                new_found.extend(current_search.derivationally_related_forms())
-
-                for item in new_found:
-                    if item not in output_lemmas:
-                        lemma_words.append(item)
-
-    return output_words
-
-
 """Functions of increasing number of keywords"""
->>>>>>> refs/remotes/origin/master
 
 
 def get_identifier(item) -> str:
@@ -145,7 +83,7 @@ def get_all_synonyms(words) -> list:
         synsets.extend(wn.synsets(word))
 
     if synsets:
-        synset_words = synsets[0]   
+        synset_words = [synsets[0]] 
         """To get everything, potentially lots of unrelated words, change the line above to:
           synset_words = synsets""" 
 
@@ -154,7 +92,6 @@ def get_all_synonyms(words) -> list:
 
         while len(synset_words) > 0 or len(lemma_words) > 0:
             # for i in range(20):
-
             if len(synset_words) > 0:
 
                 # take first word on the list for new search
@@ -194,7 +131,7 @@ def get_all_synonyms(words) -> list:
 def read_keywords(filename) -> dict():
     keywords = dict()
 
-    with open(filename, "r") as file: #TODO: fix file path
+    with open(filename, "r") as file: 
         for line in file:
             line = line.lower()
             line = line.replace("\n", "")
@@ -204,22 +141,15 @@ def read_keywords(filename) -> dict():
     return keywords
 
 
-<<<<<<< HEAD
-def add_new_synonyms(inputfilename, outputfilename):
-=======
-def add_new_synonyms(input_filename, outpu_filename):
->>>>>>> refs/remotes/origin/master
+def add_new_synonyms(input_filename, output_filename):
+
     """
     This function extends the keywords given in the txt file of filename.
     The output is saved as a json file under the same name as filename.
     :param words: str
     """
 
-<<<<<<< HEAD
-    keywords = read_keywords(inputfilename)
-=======
     keywords = read_keywords(input_filename)
->>>>>>> refs/remotes/origin/master
 
     start = time.time()
     for key in keywords.keys():
@@ -237,9 +167,5 @@ def add_new_synonyms(input_filename, outpu_filename):
 
         keywords[key] = list(set(keywords[key]))
 
-<<<<<<< HEAD
-        with open(outputfilename, 'w+') as fp:
-=======
-        with open(outpu_filename, 'w+') as fp: #TODO fix this path
->>>>>>> refs/remotes/origin/master
+        with open(output_filename, 'w+') as fp:
             json.dump(keywords, fp)
