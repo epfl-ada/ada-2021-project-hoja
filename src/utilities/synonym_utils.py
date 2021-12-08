@@ -75,9 +75,18 @@ def get_synsets_input_words(words, word_type) -> list:
     synsets = []
     for word in words:
       word_synsets = wn.synsets(word)
-      for synset in word_synsets:
-        if synset.pos() == word_type and synset.lemmas()[0].name() == word:
-          synsets.append(synset)
+      
+      # Hard coded these exeptions if more are found, they should be added here.
+      if word == 'stroke':
+        synsets.append(wn.synset('stroke.n.03'))
+      elif word == 'aids':
+        synsets.append(wn.synset('AIDS.n.01'))
+      
+      
+      else:
+        for synset in word_synsets:
+          if synset.pos() == word_type and synset.lemmas()[0].name() == word:
+            synsets.append(synset)
           
     return synsets
 
