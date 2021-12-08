@@ -31,7 +31,7 @@ class Keyword:
         lowercase_quotation_list = lowercase_quotation.split(" ")
         for syn in self.synonym:
             syn = syn.split(" ")
-              if set(syn).issubset(lowercase_quotation_list):
+            if set(syn).issubset(lowercase_quotation_list):
                 return True
                   
         return False
