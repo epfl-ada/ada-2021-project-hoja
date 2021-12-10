@@ -40,19 +40,22 @@ def add_new_synonyms(input_filename, output_filename):
         old_n = len(baseline_keywords)
         
         keywords[key] = extend_with_wikidata(baseline_keywords)
+        print("words added by wikidata:", len(keywords[key]) - old_n)
+        old_n = len(keywords[key])
         
         keywords[key] = extend_with_wordnet(keywords[key])
         keywords[key] = list(set(keywords[key]))
         
+        print("words added by wordnet:", len(keywords[key]) - old_n)
+        
         print("time taken:", time.time() - start)
         print("total keywords:", len(keywords[key]))
-        print("words added:", len(keywords[key]) - old_n)
+       
         start = time.time()
 
         with open(output_filename, 'w+') as fp:
             json.dump(keywords, fp)
             
-    print(output_filename)
 
 """Functions for wikidata aliases"""
 
@@ -60,12 +63,12 @@ def extend_with_wikidata(keywords):
   
   aliases = get_aliases_wikidata(keywords)
   
-  # Remove useless aliases
-  aliases = checknew_words(aliases, keywords)
-  
   if aliases:
-      keywords.extend(aliases)
-      
+    keywords.extend(aliases)
+
+  # Remove redundant synonyms
+  keywords = checknew_words(keywords)
+  
   return keywords
 
 
@@ -131,11 +134,11 @@ def extend_with_wordnet(keywords):
   for i in range(len(keywords)):
     keywords[i] = keywords[i].replace("_", " ")
     
-  # Remove redundant synonyms
-  synonyms = checknew_words(synonyms, keywords)
-  
   if synonyms:
       keywords.extend(synonyms)
+      
+  # Remove redundant synonyms
+  keywords = checknew_words(keywords)
   
   return keywords
 
@@ -233,7 +236,7 @@ def update_lemmas(lemma, output_words, lemma_words, output_lemmas):
   lemma_words.remove(lemma)
               
   new_found = list()
-  new_found.extend(lemma.derivationally_related_forms())
+  #new_found.extend(lemma.derivationally_related_forms())
   #TODO: remove this/only for input keyword? ~500 words difference (3500->3000)
 
   for item in new_found:
@@ -246,39 +249,50 @@ def update_lemmas(lemma, output_words, lemma_words, output_lemmas):
 """General utility functions"""
 
 
-def checknew_words(new_words, old_words):
+def checknew_words(old_words):
   """Remove sub set words. E.g. if keywords contains meningitis and 
   aliases spinal meningitis, remove spinal meningitis.
   Also removes words shorter than len 3."""
   
-  new_words = [word for word in new_words if len(word) > 3 and '.' not in word]
+  old_words = [word for word in old_words
+               if len(word) > 3
+               and ('.' or '(' or '/' or '{' or ',') not in word and
+               len(word.split(" ")) < 4]
   
-  # remove redundant words  
-  words_to_check = new_words
-  new_words = list()
-  while words_to_check:
-    check = words_to_check[0]
-    del words_to_check[0]
-    
+  new_words = filter_keywords(old_words)
+  
+  return new_words  
+
+          
+
+def filter_keywords(keywords):
+  compare = keywords.copy()
+  output = list()
+  
+  while compare:
+    check = compare[0]
+    del compare[0]
     useless = 0
-    for old_word in old_words:
-      if len(old_word.split(' ')) == 1:
-        for word in check.split(' '):
-          if word == old_word:
+    
+    for word in keywords:
+      if word != check:
+        if len(check.split(' ')) > 1:
+          in_count = 0
+          for sub in word.split(' '):
+            if sub in check.split(' '):
+              in_count += 1
+          
+          if in_count == len(word.split(' ')):
             useless = 1
             break
         
-      if len(old_word.split(' ')) > 1 and old_word in check:
-        useless = 1
+          
+    if useless == 0:
+      output.append(check)
         
-      if useless:
-        break
-      
-    if not useless:
-      new_words.append(check)
-  
-  
-  return new_words            
+  return output
+
+        
 
 
 
