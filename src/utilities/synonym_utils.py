@@ -39,7 +39,7 @@ def add_new_synonyms(input_filename, output_filename):
         baseline_keywords = keywords[key]
         old_n = len(baseline_keywords)
         
-        #keywords[key] = extend_with_wikidata(baseline_keywords)
+        keywords[key] = extend_with_wikidata(baseline_keywords)
         
         keywords[key] = extend_with_wordnet(keywords[key])
         keywords[key] = list(set(keywords[key]))
@@ -274,8 +274,6 @@ def checknew_words(new_words, old_words):
       if useless:
         break
       
-      
-    
     if not useless:
       new_words.append(check)
   
