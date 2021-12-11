@@ -2,14 +2,11 @@
 File name: synonym_utils.py
 Author: HOJA
 Date created: 4/12/2021
-Date last modified: 4/12/2021
+Date last modified: 11/12/2021
 Python Version: 3.8
 """
 
 import json
-from qwikidata.entity import WikidataItem
-from qwikidata.json_dump import WikidataJsonDump
-from qwikidata.utils import dump_entities_to_json
 import pywikibot
 import requests
 from nltk.corpus import wordnet as wn
@@ -35,17 +32,26 @@ def add_new_synonyms(input_filename, output_filename):
 
     start = time.time()
     for key in keywords.keys():
+      if key != 'diabetes mellitus':    #Prevent getting type 2 diabetes in keywords
         print(key)
         baseline_keywords = keywords[key]
         old_n = len(baseline_keywords)
         
         keywords[key] = extend_with_wikidata(baseline_keywords)
+        keywords[key] = list(set(keywords[key]))
         print("words added by wikidata:", len(keywords[key]) - old_n)
         old_n = len(keywords[key])
         
         keywords[key] = extend_with_wordnet(keywords[key])
         keywords[key] = list(set(keywords[key]))
         
+        # Hard coded exception
+        if 'consumption' in keywords[key]:
+          keywords[key].remove('consumption')
+          
+        if 'piles' in keywords[key]:
+          keywords[key].remove('piles')
+          
         print("words added by wordnet:", len(keywords[key]) - old_n)
         
         print("time taken:", time.time() - start)
@@ -60,6 +66,10 @@ def add_new_synonyms(input_filename, output_filename):
 """Functions for wikidata aliases"""
 
 def extend_with_wikidata(keywords):
+  """This fucntions extends keywords list by finding aliases
+  on wikidata for keywords
+  param: keywords: list
+  return: keywords: list"""
   
   aliases = get_aliases_wikidata(keywords)
   
@@ -68,6 +78,7 @@ def extend_with_wikidata(keywords):
 
   # Remove redundant synonyms
   keywords = checknew_words(keywords)
+  
   
   return keywords
 
@@ -119,7 +130,11 @@ def get_aliases_wikidata(words) -> list:
 
 """"Functions for synsets"""
 
-def extend_with_wordnet(keywords):
+def extend_with_wordnet(keywords) -> list:
+  """This fucntions extends keywords list by finding hyponyms and lemmas
+  in the wordnet database for keywords
+  param: keywords: list
+  return: keywords: list"""
   
   # replace space by _, works better for wordnet
   for i in range(len(keywords)):
@@ -139,14 +154,13 @@ def extend_with_wordnet(keywords):
       
   # Remove redundant synonyms
   keywords = checknew_words(keywords)
-  
+    
   return keywords
 
 
 def get_all_synonyms(words) -> list:
     """
     Gets all related words to the input words via the wordnet databank.
-    
     Relations are hyponyms and derivationally derived words.
     The first synset is taken to be the the correct synset to use.
     :param words: list
@@ -158,9 +172,6 @@ def get_all_synonyms(words) -> list:
     
     if synsets:
       synset_words = synsets
-      
-      """To get everything, potentially lots of unrelated words, change the line above to:
-        synset_words = synsets""" 
   
       lemma_words = []
       output_lemmas = []
@@ -181,8 +192,6 @@ def get_all_synonyms(words) -> list:
               
 
     return output_words
-  
-  
 
 def get_synsets_input_words(words, word_type) -> list:
     """
@@ -199,7 +208,10 @@ def get_synsets_input_words(words, word_type) -> list:
         synsets.append(wn.synset('stroke.n.03'))
       elif word == 'aids':
         synsets.append(wn.synset('AIDS.n.01'))
-      
+      elif word == 'fire':
+        synsets.append(wn.synset('fire.n.01'))
+      elif word == 'consumption':
+        synsets.append(wn.synset('pulmonary_tuberculosis.n.01'))
       
       else:
         for synset in word_synsets:
@@ -209,7 +221,17 @@ def get_synsets_input_words(words, word_type) -> list:
     return synsets
 
 def update_synsets(synset, synset_words, lemma_words, output_lemmas):
-  
+  """Finds new synsets based on the hyponyms of synset. synset_words, lemmas_words
+  and output_lemmas are updated accordingly
+  param:  synset: nltk.corpus.reader.wordnet.Synset
+          synsets_words: list
+          lemma_words: list
+          output_lemmas: list
+          
+  return: synsets_words: list
+          lemma_words: list
+          output_lemmas: list"""
+          
   # remove word from search list
   synset_words.remove(synset)
   new_synsets = synset.hyponyms()
@@ -220,28 +242,30 @@ def update_synsets(synset, synset_words, lemma_words, output_lemmas):
   new_found = list()
   new_found.extend(synset.lemmas())
   for item in new_found:
-      if item not in output_lemmas and item.synset().pos() == 'n':
-          lemma_words.append(item)
+    if item not in output_lemmas and item.synset().pos() == 'n' and len(item.name()) > 2:
+        lemma_words.append(item)
   
   return synset_words, lemma_words, output_lemmas
 
 
 
 def update_lemmas(lemma, output_words, lemma_words, output_lemmas):
+  """Adds lemma name to the outut words and updates the other lists.
+  param:  synset: nltk.corpus.reader.wordnet.Lemma
+          synsets_words: list
+          lemma_words: list
+          output_lemmas: list
+          
+  return: synsets_words: list
+          lemma_words: list
+          output_lemmas: list"""
+          
   # Add the word to output list
   lemma_name_no_underscore_lowercase = lemma.name().replace("_", " ").lower()
   output_words.append(lemma_name_no_underscore_lowercase)
   output_lemmas.append(lemma)
   # remove word from search list
   lemma_words.remove(lemma)
-              
-  new_found = list()
-  #new_found.extend(lemma.derivationally_related_forms())
-  #TODO: remove this/only for input keyword? ~500 words difference (3500->3000)
-
-  for item in new_found:
-      if item not in output_lemmas and item.synset().pos() == 'n':
-          lemma_words.append(item)
           
   return output_words, lemma_words, output_lemmas
    
@@ -256,7 +280,7 @@ def checknew_words(old_words):
   
   old_words = [word for word in old_words
                if len(word) > 3
-               and ('.' or '(' or '/' or '{' or ',') not in word and
+               and ('.' or '(' or '/' or '{' or ',' or ';') not in word and
                len(word.split(" ")) < 4]
   
   new_words = filter_keywords(old_words)
@@ -266,6 +290,9 @@ def checknew_words(old_words):
           
 
 def filter_keywords(keywords):
+  """"Filters out redundant keywords. E.g. if keywords contains meningitis and 
+  aliases spinal meningitis, remove spinal meningitis."""
+  
   compare = keywords.copy()
   output = list()
   
@@ -292,21 +319,23 @@ def filter_keywords(keywords):
         
   return output
 
-        
-
 
 
 def read_keywords(filename) -> dict():
-    keywords = dict()
+  """Reads keywords in a text file into a dict.
+  param: filename: str
+  return: keywords: dict"""
+  
+  keywords = dict()
 
-    with open(filename, "r") as file: 
-        for line in file:
-            line = line.lower()
-            line = line.replace("\n", "")
-            line = line.split('<>')
-            keywords[line[0]] = line
+  with open(filename, "r") as file: 
+      for line in file:
+          line = line.lower()
+          line = line.replace("\n", "")
+          line = line.split('<>')
+          keywords[line[0]] = line
 
-    return keywords
+  return keywords
 
 
 
