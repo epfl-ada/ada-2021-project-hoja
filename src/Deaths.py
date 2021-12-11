@@ -11,6 +11,7 @@ import pandas as pd
 from src.utilities.death_df_utils import *
 from src.CONSTS import DEATHS_INFO_COLUMNS
 from src.utilities.plotting import *
+from src.utilities.utils import *
 
 
 class Deaths:
@@ -20,7 +21,7 @@ class Deaths:
         self.columns = []
         self.quant_columns = []
         self.df = self.modify_df(pd.read_csv(path), rename_cols, drop_cols)
-        self.percentage_df = percentage_of_total_deaths(self.df, self.quant_columns)
+        self.percentage_df = percentage_of_total_count(self.df, self.quant_columns)
     
     def modify_df(self, df, rename_cols, drop_cols):
         

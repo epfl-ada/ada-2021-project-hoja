@@ -19,7 +19,8 @@ class QuoteBankData:
     def __init__(self, name: str, keywords: list):
         self.name = name
         self.keywords = keywords
-        self.quotes_occurrences_df = pd.DataFrame()
+        self.quotes_occurrences_df = pd.DataFrame(columns=["Year"] + self.get_all_keyword_names())
+        self.quotes_percentage_df = pd.DataFrame(columns=["Year"] + self.get_all_keyword_names())
 
     def get_all_keyword_names(self) -> list:
         """
