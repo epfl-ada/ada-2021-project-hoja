@@ -51,6 +51,9 @@ def add_new_synonyms(input_filename, output_filename):
           
         if 'piles' in keywords[key]:
           keywords[key].remove('piles')
+        
+        if 'intoxication' in keywords[key]:
+          keywords[key].remove('intoxication')
           
         print("words added by wordnet:", len(keywords[key]) - old_n)
         
@@ -114,6 +117,7 @@ def get_aliases_wikidata(words) -> list:
     alias = list()
 
     for word in words:
+      if word != 'war':
         identifier = get_identifier(word)
         if identifier:
             site = pywikibot.Site("wikidata", "wikidata")
