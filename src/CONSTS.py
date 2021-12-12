@@ -11,6 +11,7 @@ GENERATED_PATH = './generated/'
 KEYWORDS_FILE_PATH = DATA_PATH + "keywords.txt"
 KEYWORDS_JSON_FILE_PATH = DATA_PATH + "keywords.json"
 COUNTRY_EXTENSIONS_FILE_PATH = DATA_PATH + "country_url_end.txt"
+SPEAKER_ATTRIBUTES_PATH = DATA_PATH + "speaker_attributes.parquet"
 
 COLORS = ["red", "green", "blue", "brown", "yellow", "purple", "orange", "pink"]
 
@@ -22,6 +23,8 @@ TOPICS_FOR_CLUSTERING =  ["fire, heat, and hot substances",
                           "poisonings",
                           "drowning"]
 
+COUNTRY_IDENTIFIER = dict()
+#SPEAKER_ATTRIBUTES = dict()
 
 BEGIN_YEAR = 2008
 END_YEAR = 2017

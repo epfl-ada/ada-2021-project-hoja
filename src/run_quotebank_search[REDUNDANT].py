@@ -4,8 +4,10 @@ from src.QuoteBankData import QuoteBankData
 from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH
 from src.utilities import quotebank_preprocessing_utils as utils
 from src.utilities import synonym_utils as syn_utils
+from src.utilities import add_country_speaker as country_utils
 from tqdm import tqdm
-
+import json
+import pandas as pd
 
 def quotation_classification():
     """
@@ -40,16 +42,20 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-            if i ==30000: break
+            if i ==100000: break
             quotation = utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:
+                # Add country of speaker to line
+                line = country_utils.expand_line(line, SPEAKER_ATTRIBUTES)
                 for found_keyword in found_keywords:
                     found_keyword.json_lines.append(line)
 
 
 # START
 #syn_utils.add_new_synonyms(KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH)
+SPEAKER_ATTRIBUTES = pd.read_parquet("data/speaker_attributes.parquet")
+
 quotebank = QuoteBankData("Asymmetry of News", [])
 quotebank.read_keywords_from_file()
 utils.create_directories_for_every_year()
