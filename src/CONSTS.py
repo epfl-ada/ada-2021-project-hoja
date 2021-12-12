@@ -6,8 +6,8 @@ Date last modified: 12/11/2021
 Python Version: 3.8
 """
 
-GENERATED_PATH = './generated/'
 DATA_PATH = './data/'
+GENERATED_PATH = DATA_PATH + './generated/'
 KEYWORDS_FILE_PATH = DATA_PATH + "keywords.txt"
 KEYWORDS_JSON_FILE_PATH = DATA_PATH + "keywords.json"
 COUNTRY_EXTENSIONS_FILE_PATH = DATA_PATH + "country_url_end.txt"

@@ -37,20 +37,6 @@ def extract_world_data(df):
     return df
 
 
-def percentage_of_total_deaths(df, columns):
-    """
-    Modifies death columns to percentages of total deaths
-    """
-    df = df.copy()
-    df["Total deaths"] = 0
-    for column in columns:
-        df["Total deaths"] += df[column]
-    for column in columns:
-        df[column] = (df[column]/df["Total deaths"])*100
-    df = df.drop("Total deaths", axis=1)
-    return df
-
-
 def update_nan_values(df, quant_columns):
     """
     Use linear regression based on the values from the other years to predict a value for all NaN cells.
