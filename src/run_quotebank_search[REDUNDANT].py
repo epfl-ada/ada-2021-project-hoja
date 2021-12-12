@@ -47,14 +47,15 @@ def quotation_classification_for_file(filename):
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:
                 # Add country of speaker to line
-                line = country_utils.expand_line(line, SPEAKER_ATTRIBUTES)
+                line = country_utils.expand_line(line)
                 for found_keyword in found_keywords:
                     found_keyword.json_lines.append(line)
 
 
 # START
 #syn_utils.add_new_synonyms(KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH)
-SPEAKER_ATTRIBUTES = pd.read_parquet("data/speaker_attributes.parquet")
+utils.load_speaker_info()
+
 
 quotebank = QuoteBankData("Asymmetry of News", [])
 quotebank.read_keywords_from_file()

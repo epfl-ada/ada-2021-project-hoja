@@ -8,7 +8,8 @@ Python Version: 3.8
 
 import os
 import json
-from src.CONSTS import DATA_PATH, GENERATED_PATH, BEGIN_YEAR, END_YEAR
+from src.CONSTS import DATA_PATH, GENERATED_PATH, BEGIN_YEAR, END_YEAR, SPEAKER_ATTRIBUTES_PATH, SPEAKER_ATTRIBUTES
+import pandas as pd
 
 begin_year = BEGIN_YEAR - 2000
 end_year = (END_YEAR - 2000) + 1
@@ -86,3 +87,23 @@ def extract_quotation(line) -> str:
     """
     json_line = json.loads(line)
     return json_line['quotation']
+
+def load_speaker_info():
+    """
+    Load speaker info from parquet file into dataframe. Then remove useless stuff.
+    Finally transfrom into dict, since lookup will be faster. Keys are speaker id and
+    values for keys are the country ids.
+    """
+    print("Load speaker info...")
+    raw_df = pd.read_parquet(SPEAKER_ATTRIBUTES_PATH)
+    raw_df = raw_df[raw_df['nationality'].notna()]
+    raw_df = raw_df[raw_df['date_of_birth'].notna()]     
+    raw_df = raw_df.reset_index()
+    dates = raw_df['date_of_birth'].tolist()
+    raw_df = raw_df[['nationality','id']]
+                    
+    for i in range(len(dates)):
+        if int(dates[i][0][1:5]) > 1920:   
+            SPEAKER_ATTRIBUTES[raw_df['id'][i]] = raw_df['nationality'][i]
+    
+    return SPEAKER_ATTRIBUTES
