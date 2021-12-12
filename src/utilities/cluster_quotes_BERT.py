@@ -23,47 +23,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 "This function for the object of QuoteBankData"
 
-def filter_quotes(json_lines, keywords, key):
-    """The quotes are updated by vectorizing the quotes with SentenceTransformers
-    and clustering with HDBSCAN.
-    Clusters for which at least two of the ten most important words are in the keywords
-    are kept.
-    
-    param:  json_lines: list
-            keywords: list
-            
-    return: correct_quotes: list"""
-    
-    quotes = list()
-    for line in json_lines:
-      quotes.append(utils.extract_quotation(line))
-    
-    # cluster data
-    cluster = cluster_quotes(quotes)
-    
-    # Keep the right clusters
-    print("assigning ...")
-    quotes_df = pd.DataFrame(quotes, columns=["quotation"])
-    quotes_df['Topic'] = cluster.labels_
-    quotes_per_topic = quotes_df.groupby(['Topic'], as_index = False).agg({'quotation': ' '.join})
-    
-    tf_idf, count = c_tf_idf(quotes_per_topic.quotation.values, m=len(quotes))
-    # Get top 10 words per topic
-    top_n_words = extract_top_n_words_per_topic(tf_idf, count, quotes_per_topic, n=10)
-    # Get topics which have at least 2 words in their top 10 which are also in the keyword list
-    if key == "poisonings":   # hard coded exception
-        keywords.extend(["lead", "water", "food","arsenic"])
-        
-    correct_clusters = select_correct_topics(top_n_words, keywords)
-    
-    # Get indices of correct quotes
-    lines_to_keep = np.zeros(len(quotes_df), dtype=bool)
-    for cluster in correct_clusters:
-      lines_to_keep = np.logical_or(lines_to_keep, quotes_df['Topic'] == cluster)
-        
-    json_lines = np.array(json_lines)[lines_to_keep].tolist
-    
-    return json_lines
+
 
 """The functions and the pipeline in this file have largely been implemented from:
   https://towardsdatascience.com/topic-modeling-with-bert-779f7db187e6
@@ -209,11 +169,51 @@ def filter_quotes_with_BERT(path, filter_list):
       with bz2.open(output_filename, 'wb') as bzoutput:
           df.to_json(bzoutput)
       
-      
-#filter_quotes_with_BERT("generated/2016/", ["drowning"])
+      """"Redundant"""
 
-
-
+def filter_quotes(json_lines, keywords, key):
+    """The quotes are updated by vectorizing the quotes with SentenceTransformers
+    and clustering with HDBSCAN.
+    Clusters for which at least two of the ten most important words are in the keywords
+    are kept.
+    
+    param:  json_lines: list
+            keywords: list
+            
+    return: correct_quotes: list"""
+    
+    quotes = list()
+    for line in json_lines:
+      quotes.append(utils.extract_quotation(line))
+    
+    # cluster data
+    cluster = cluster_quotes(quotes)
+    
+    # Keep the right clusters
+    print("assigning ...")
+    quotes_df = pd.DataFrame(quotes, columns=["quotation"])
+    quotes_df['Topic'] = cluster.labels_
+    quotes_per_topic = quotes_df.groupby(['Topic'], as_index = False).agg({'quotation': ' '.join})
+    
+    tf_idf, count = c_tf_idf(quotes_per_topic.quotation.values, m=len(quotes))
+    # Get top 10 words per topic
+    top_n_words = extract_top_n_words_per_topic(tf_idf, count, quotes_per_topic, n=10)
+    # Get topics which have at least 2 words in their top 10 which are also in the keyword list
+    if key == "poisonings":   # hard coded exception
+        keywords.extend(["lead", "water", "food","arsenic"])
+        
+    correct_clusters = select_correct_topics(top_n_words, keywords)
+    
+    # Get indices of correct quotes
+    lines_to_keep = np.zeros(len(quotes_df), dtype=bool)
+    for cluster in correct_clusters:
+      lines_to_keep = np.logical_or(lines_to_keep, quotes_df['Topic'] == cluster)
+        
+    json_lines = np.array(json_lines)
+    json_lines = json_lines[lines_to_keep]
+    json_lines = json_lines.tolist()
+    
+    return json_lines
 
 
 

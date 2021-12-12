@@ -17,11 +17,12 @@ def quotation_classification():
     for index, filename in enumerate(quotes_filenames_list):
         print("Elaborating file: " + filename.split("/").pop())
         quotation_classification_for_file(filename)
-        #quotebank.sample_found_quotes(index, "before.txt") #Sample quotes found
+        quotebank.sample_found_quotes(index, "before.txt") #Sample quotes found
         quotebank.filter_found_quotes_by_clustering() # Cluster some topics and remove wrong quotes
         
+        quotebank.sample_found_quotes(index, "after.txt") #Sample quotes found
         quotebank.write_matching_quotes_to_file_for_year(index)
-        #quotebank.sample_found_quotes(index, "after.txt") #Sample quotes found
+        
         
         quotebank.delete_json_lines_for_all_keywords()
 
@@ -39,7 +40,7 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-           # if i == 10000: break
+            if i ==30000: break
             quotation = utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:
@@ -48,7 +49,7 @@ def quotation_classification_for_file(filename):
 
 
 # START
-syn_utils.add_new_synonyms(KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH)
+#syn_utils.add_new_synonyms(KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH)
 quotebank = QuoteBankData("Asymmetry of News", [])
 quotebank.read_keywords_from_file()
 utils.create_directories_for_every_year()

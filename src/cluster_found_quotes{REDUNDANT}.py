@@ -114,10 +114,16 @@ def select_correct_topics(model, keywords):
   for words in keywords:
     for word in words.split(" "):
       all_words.append(word)
-    
-  for topic in model.show_topics(num_words=3):
-    if any(word in topic[1] for word in all_words):
+  all_words = list(set(all_words))
+  count = 0
+  print(model.show_topics(num_words=5))
+  for topic in model.show_topics(num_words=5):
+    for word in all_words:
+      if word in topic[1]:
+        count += 1
+    if count > 0:
       topic_numbers.append(topic[0])
+      
   
   return topic_numbers
 
@@ -176,56 +182,27 @@ def filter_found_quotes_with_clustering(path, filter_list, n_topics):
       df = df.loc[lines_to_keep]
       
       # Show some output
+      
       print(topic_numbers)
       for number in topic_numbers:
-        print(df["quotation"].sample(5))
-        
-      print("saving ...")
-      # Update file
-      with open(filename, 'w') as bzoutput:
-        df.to_json(bzoutput)
+        sample = df["quotation"].sample(5)
+        for line in sample:
+          print(line)
+        print('\n')
+      
+      break
+# =============================================================================
+#       print("saving ...")
+#       # Update file
+#       with open("test.json", 'w+') as bzoutput:
+#         df.to_json(bzoutput)
+#       
+# =============================================================================
+  return df
  
 
-filter_found_quotes_with_clustering("generated/2016/", ["road injuries"], n_topics = 5)
+df = filter_found_quotes_with_clustering("generated/2015/",
+                                    ["road injuries"], n_topics = 8)
 
 
-#%% SOME SHIT FOR TRIALS
-import time
-
-file_name = "generated/2016/road_injuries-2016.json.bz2"
-
-with bz2.open(file_name, "rt") as bz_input:
-  lines = []
-  for i, line in enumerate(bz_input):
-    lines.append(json.loads(line)['quotation'])
-
-with open(KEYWORDS_JSON_FILE_PATH, "r") as file:
-  keywords = json.load(file)
-
-start = time.time()
-# Process into bag of words
-dictionary, corpus = create_bag_of_words(process_quotes(lines))
-
-params = {'passes': 10, 'random_state': seed}
-base_models = dict()
-model = LdaModel(corpus=corpus, id2word=dictionary, num_topics = 5,
-                passes=params['passes'], random_state=params['random_state'])
-
-# assignment
-sent_to_cluster = assign_to_cluster(corpus, model)
-
-key = file_name.split('-')[0].split('/')[-1].replace("_"," ")
-
-topic_numbers = select_correct_topics(model, keywords[key])
-
-print(model.show_topics(num_words=3))
-print(topic_numbers)
- 
-sent_to_cluster = np.array(sent_to_cluster)
-lines_np = np.array(lines)
-lines_np = lines_np[:len(sent_to_cluster)]
-
-for number in topic_numbers:
-  print(lines_np[sent_to_cluster == number][:10])
-  
-print("Total time taken", time.time() - start)
+    

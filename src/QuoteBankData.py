@@ -7,11 +7,10 @@ Python Version: 3.8
 """
 
 from src.Keyword import Keyword
-from src.CONSTS import KEYWORDS_JSON_FILE_PATH, GENERATED_PATH
+from src.CONSTS import KEYWORDS_JSON_FILE_PATH, GENERATED_PATH, TOPICS_FOR_CLUSTERING
 from src.utilities import quotebank_preprocessing_utils as utils
 import pandas as pd
 import json
-
 
 # TODO: change class name
 class QuoteBankData:
@@ -68,6 +67,35 @@ class QuoteBankData:
             if k.find_keyword_in_quotation(quotation):
                 found_keywords.append(k)
         return found_keywords
+      
+    def sample_found_quotes(self, year_index, output_name):
+        """
+        For each keyword, samples found quotes and writes to text file.
+        Ten random quotes are taken.
+        :param year_index: int
+               output_name: str
+        """
+        # Get sample list
+        sample = list()
+        for k in self.keywords:
+            if len(k.json_lines) > 10:
+                sample.extend(k.get_sample_of_found_quotes())
+                
+        # write list to file
+        if sample:
+            years = utils.get_all_years()   
+            output =  GENERATED_PATH + years[year_index] + "/" + output_name
+            with open(output, 'w+') as the_file:
+                for element in sample:
+                    the_file.write(element + "\n")  
+    
+    
+    def filter_found_quotes_by_clustering(self):
+        """After the quotes have been found in the data base for a year, do an extra 
+        filtering step by clustering."""
+        for k in self.keywords:
+            if k.name in TOPICS_FOR_CLUSTERING and len(k.json_lines) > 100:
+                k.filter_quotes()
 
     def write_matching_quotes_to_file_for_year(self, year_index):
         """

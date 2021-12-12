@@ -7,12 +7,21 @@ Python Version: 3.8
 """
 
 DATA_PATH = './data/'
-GENERATED_PATH = DATA_PATH + './generated/'
+GENERATED_PATH = './generated/'
 KEYWORDS_FILE_PATH = DATA_PATH + "keywords.txt"
 KEYWORDS_JSON_FILE_PATH = DATA_PATH + "keywords.json"
 COUNTRY_EXTENSIONS_FILE_PATH = DATA_PATH + "country_url_end.txt"
 
 COLORS = ["red", "green", "blue", "brown", "yellow", "purple", "orange", "pink"]
+
+TOPICS_FOR_CLUSTERING =  ["fire, heat, and hot substances",
+                          "environmental heat and cold exposure",
+                          "road injuries",
+                          "war and terrorism",
+                          "interpersonal violence",
+                          "poisonings",
+                          "drowning"]
+
 
 BEGIN_YEAR = 2008
 END_YEAR = 2017
