@@ -66,9 +66,11 @@ def assign_country_to_speaker(q_person) ->list:
     return: speaker_country: list
     """
     q_country = get_country_identifier(q_person)
-       
+    # Get most common country if multiple found
     if q_country:
         q_country = get_most_common_values_list(q_country)
+    
+    # Multiple countries found for speaker    
     if len(q_country) > 1:
         speaker_country = list()
         for id_country in q_country:
@@ -76,20 +78,22 @@ def assign_country_to_speaker(q_person) ->list:
                 speaker_country.append(COUNTRY_IDENTIFIER[id_country])
             else:
                 country = get_country_from_wikidata(id_country)
-                print(type(country))
                 speaker_country.append(country)
                 COUNTRY_IDENTIFIER[id_country] = country
-                
-    else:
+     
+    # One country found           
+    elif len(q_country) == 1:
         id_country = q_country[0]
         if id_country in COUNTRY_IDENTIFIER:
             speaker_country = COUNTRY_IDENTIFIER[id_country]
         else:
             country = get_country_from_wikidata(id_country)
-            print(type(country))
             speaker_country = country
             COUNTRY_IDENTIFIER[id_country] = country
-            
+    
+    # No country found
+    else:
+        speaker_country = None
     return speaker_country
   
 
@@ -97,7 +101,6 @@ def expand_line(line):
     """Adds the country of the speaker to the line
     param: line: json
     return: expanded_line: json"""
-    print(SPEAKER_ATTRIBUTES)
     # load from json
     parsed = json.loads(line)
     # adapt
