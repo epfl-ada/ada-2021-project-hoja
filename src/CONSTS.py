@@ -24,7 +24,7 @@ TOPICS_FOR_CLUSTERING =  ["fire, heat, and hot substances",
                           "drowning"]
 
 COUNTRY_IDENTIFIER = dict()
-#SPEAKER_ATTRIBUTES = dict()
+SPEAKER_ATTRIBUTES = dict()
 
 BEGIN_YEAR = 2008
 END_YEAR = 2017

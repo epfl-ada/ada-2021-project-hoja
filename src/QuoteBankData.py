@@ -96,6 +96,7 @@ class QuoteBankData:
         for k in self.keywords:
             if k.name in TOPICS_FOR_CLUSTERING and len(k.json_lines) > 100:
                 k.filter_quotes()
+      
 
     def write_matching_quotes_to_file_for_year(self, year_index):
         """
@@ -103,6 +104,7 @@ class QuoteBankData:
         :param year_index: int
         """
         # TODO from speaker and URL --> add json parameter for country
+        
         for k in self.keywords:
             k.assign_quote_to_file_for_year(year_index)
 
