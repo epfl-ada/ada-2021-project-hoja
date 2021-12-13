@@ -141,8 +141,8 @@ def get_country_from_identifier(q_website):
             clm_list = item_dict["claims"]["P17"]
             for clm in clm_list:
                 clm_trgt = clm.getTarget()   
-
-                return clm_trgt.text["labels"]["en"]
+                if clm_trgt:
+                    return clm_trgt.text["labels"]["en"]
       
       
 def get_country_website(url) -> str:  
@@ -185,12 +185,12 @@ def assign_country_to_url(urls) -> list:
         start = time.time()
         if url in URL_COUNTRY:
             countries.append(URL_COUNTRY[url])
-            print("time if url is already found: ",time.time()-start)
         else:
             country = get_country_website(url)
             URL_COUNTRY[url] = country
             countries.append(country)
             print("time if not already found: ",time.time()-start)
+            print("Current size of url->country dict is:", len(URL_COUNTRY))
       
     return countries
 
@@ -207,6 +207,7 @@ def expand_line(line):
     else:
         speaker_country = [] 
     parsed['country_speaker'] = speaker_country
+    
     # adapt for country url
     urls = parsed['urls']
     url_countries = assign_country_to_url(urls)
