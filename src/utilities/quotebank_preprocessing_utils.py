@@ -8,7 +8,7 @@ Python Version: 3.8
 
 import os
 import json
-from src.CONSTS import DATA_PATH, GENERATED_PATH, BEGIN_YEAR, END_YEAR, SPEAKER_ATTRIBUTES_PATH, SPEAKER_ATTRIBUTES
+from src.CONSTS import BEGIN_YEAR, END_YEAR, DATA_PATH, GENERATED_PATH, SPEAKER_ATTRIBUTES_PATH, SPEAKER_ATTRIBUTES, URL_END_PATH, URL_END_LIB, URL_COUNTRY_PATH, URL_COUNTRY
 import pandas as pd
 
 begin_year = BEGIN_YEAR - 2000
@@ -107,3 +107,20 @@ def load_speaker_info():
             SPEAKER_ATTRIBUTES[raw_df['id'][i]] = raw_df['nationality'][i]
     
     return SPEAKER_ATTRIBUTES
+  
+def load_url_end():
+    file = open(URL_END_PATH, "r")
+    for index, line in enumerate(file):
+        URL_END_LIB[line[:-1].split('\t')[1][1:]] = line[:-1].split('\t')[0]
+
+
+def load_url_country_lib():
+    if os.path.isfile(URL_COUNTRY_PATH):
+        with open(URL_COUNTRY_PATH, 'r') as fp:
+            inter = json.load(fp)
+        for key in inter:
+            URL_COUNTRY[key] = inter[key]
+
+def safe_url_country_lib():
+    with open(URL_COUNTRY_PATH, 'w+') as fp:
+        json.dump(URL_COUNTRY, fp)

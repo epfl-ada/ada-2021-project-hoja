@@ -9,8 +9,12 @@ import json
 import pywikibot
 import collections
 import numpy as np
-from src.CONSTS import COUNTRY_IDENTIFIER, SPEAKER_ATTRIBUTES
+from src.CONSTS import COUNTRY_IDENTIFIER, SPEAKER_ATTRIBUTES, URL_END_LIB, URL_COUNTRY
+import requests
+import time
 
+
+"""FUnctions to get country of speaker"""
 
 def get_country_from_wikidata(q_country) -> str:
     """This function finds the country of a q-identifier on wikidata.
@@ -59,6 +63,7 @@ def get_most_common_values_list(input_list) ->list:
         if freq_map[key] == max_freq:
             output_list.append(key)      
     return output_list
+
      
 def assign_country_to_speaker(q_person) ->list:
     """ This function finds the country(ies) of a list of qids of a person.
@@ -90,12 +95,104 @@ def assign_country_to_speaker(q_person) ->list:
             country = get_country_from_wikidata(id_country)
             speaker_country = country
             COUNTRY_IDENTIFIER[id_country] = country
-    
+        
     # No country found
     else:
-        speaker_country = None
+      speaker_country = None
     return speaker_country
-  
+
+
+"""Functions to get country of url"""
+
+def get_identifier(item) -> str:
+    """This function finds the wikidata identifier for a given string input (item)
+    input:
+        -item: str, item of which you want the wikidata identfier
+    output:
+        : str, wikidata identfier"""
+    
+    params = dict (
+            action='wbsearchentities',
+            format='json',
+            language='en',
+            uselang='en',
+            type='item',
+            search=item
+            )
+    
+    response = None
+    try:
+        response = requests.get('https://www.wikidata.org/w/api.php?', params).json()
+    except ValueError:
+        pass
+    
+    if response:
+        if response.get('search'):
+            return response.get('search')[0]['id']
+
+def get_country_from_identifier(q_website):
+    site = pywikibot.Site("wikidata", "wikidata")
+    repo = site.data_repository()
+    item = pywikibot.ItemPage(repo, q_website)
+    
+    if not item.isRedirectPage():
+        item_dict = item.get()
+        if "P17" in item_dict["claims"]:
+            clm_list = item_dict["claims"]["P17"]
+            for clm in clm_list:
+                clm_trgt = clm.getTarget()   
+
+                return clm_trgt.text["labels"]["en"]
+      
+      
+def get_country_website(url) -> str:  
+    """This function finds the country in which the company of the url is based,
+    e.g. for www.guardian.co.uk it will return Great-Brittain
+    input:
+        url: str, url of which the country needs to be found
+        url_end_dic: dict, dictionary of countries for which url was already found
+    output:
+        country: str, found country"""
+    
+    country =  None
+
+    url_ending = url.split('.')[-1]
+    if url_ending in URL_END_LIB:
+        country = URL_END_LIB[url_ending]
+
+    else:
+        q_website = get_identifier(url)
+        if q_website:
+            country = get_country_from_identifier(q_website)
+
+        if q_website is None or country is None:
+            url_try_list = url.split('.')
+            url_try = max(url_try_list, key=len)
+            q_website = get_identifier(url_try)
+            if q_website:
+                country = get_country_from_identifier(q_website)
+            
+    return country
+
+def assign_country_to_url(urls) -> list:
+    """This function finds all the countries of the url list
+    param: urls: list
+    return: countries: list"""
+    
+    countries = list()
+    for url in urls:
+        url = url.split('/')[2]
+        start = time.time()
+        if url in URL_COUNTRY:
+            countries.append(URL_COUNTRY[url])
+            print("time if url is already found: ",time.time()-start)
+        else:
+            country = get_country_website(url)
+            URL_COUNTRY[url] = country
+            countries.append(country)
+            print("time if not already found: ",time.time()-start)
+      
+    return countries
 
 def expand_line(line):
     """Adds the country of the speaker to the line
@@ -103,27 +200,20 @@ def expand_line(line):
     return: expanded_line: json"""
     # load from json
     parsed = json.loads(line)
-    # adapt
+    # adapt for country speaker
     q_person = parsed['qids']
     if q_person:
         speaker_country = assign_country_to_speaker(q_person)
     else:
-        speaker_country = []
-     
+        speaker_country = [] 
     parsed['country_speaker'] = speaker_country
+    # adapt for country url
+    urls = parsed['urls']
+    url_countries = assign_country_to_url(urls)
+    parsed['country_urls'] = url_countries
     # back to json
     expanded_line = json.dumps(parsed).encode('utf-8')
-
     return expanded_line
-
-
-
-
-
-
-
-
-
 
 
 
