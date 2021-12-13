@@ -21,12 +21,17 @@ def get_country_from_wikidata(q_country) -> str:
     param:  q_country: str
     return: : str
     """
+    country = None
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
     item = pywikibot.ItemPage(repo, q_country)
     item_dict = item.get()
-    if item_dict['labels']['en']:
-        return item_dict['labels']['en']
+    try: 
+        country = item_dict['labels']['en']
+    except KeyError:
+        pass
+      
+    return country
       
 
 
@@ -134,7 +139,7 @@ def get_country_from_identifier(q_website):
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
     item = pywikibot.ItemPage(repo, q_website)
-    
+    country = None
     if not item.isRedirectPage():
         item_dict = item.get()
         if "P17" in item_dict["claims"]:
@@ -142,8 +147,13 @@ def get_country_from_identifier(q_website):
             for clm in clm_list:
                 clm_trgt = clm.getTarget()   
                 if clm_trgt:
-                    return clm_trgt.text["labels"]["en"]
-      
+                    #if "en" in clm_trgt.text["labels"]:
+                    try:
+                        country = clm_trgt.text["labels"]["en"]
+                        #return clm_trgt.text["labels"]["en"]
+                    except KeyError:
+                        pass
+                    return country
       
 def get_country_website(url) -> str:  
     """This function finds the country in which the company of the url is based,
