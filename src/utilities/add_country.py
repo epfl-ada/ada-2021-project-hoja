@@ -147,10 +147,8 @@ def get_country_from_identifier(q_website):
             for clm in clm_list:
                 clm_trgt = clm.getTarget()   
                 if clm_trgt:
-                    #if "en" in clm_trgt.text["labels"]:
                     try:
                         country = clm_trgt.text["labels"]["en"]
-                        #return clm_trgt.text["labels"]["en"]
                     except KeyError:
                         pass
                     return country
@@ -191,7 +189,6 @@ def assign_country_to_url(urls) -> list:
     
     countries = list()
     for url in urls:
-        url = url.split('/')[2]
         start = time.time()
         if url in URL_COUNTRY:
             countries.append(URL_COUNTRY[url])
@@ -205,7 +202,7 @@ def assign_country_to_url(urls) -> list:
     return countries
 
 def expand_line(line):
-    """Adds the country of the speaker to the line
+    """Adds the country of the speaker, urls and unique urls to the line
     param: line: json
     return: expanded_line: json"""
     # load from json
@@ -218,9 +215,16 @@ def expand_line(line):
         speaker_country = [] 
     parsed['country_speaker'] = speaker_country
     
+    
     # adapt for country url
     urls = parsed['urls']
-    url_countries = assign_country_to_url(urls)
+    unique_urls = list()
+    for url in urls:
+        unique_urls.append(url.split('/')[2])
+    unique_urls = list(set(unique_urls))
+    
+    parsed['unique_urls'] = unique_urls
+    url_countries = assign_country_to_url(unique_urls)
     parsed['country_urls'] = url_countries
     # back to json
     expanded_line = json.dumps(parsed).encode('utf-8')
