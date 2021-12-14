@@ -10,7 +10,7 @@ import json
 import pywikibot
 import requests
 from nltk.corpus import wordnet as wn
-from src.CO NSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS, KEYWORD_DIABETES_TYPE2
+from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS, KEYWORD_DIABETES_TYPE2
 
 import nltk
 
