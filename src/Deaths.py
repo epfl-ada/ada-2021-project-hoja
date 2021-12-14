@@ -27,7 +27,8 @@ class Deaths:
 
         df = modify_cols(df, rename_cols, drop_cols)
         df = update_col_names(df)
-        df = combine_cols(df)
+        if self.name == "deaths_by_cause":
+            df = combine_cols(df)
         self.columns = df.columns
         self.quant_columns =  [col for col in self.columns if col not in DEATHS_INFO_COLUMNS]
         df = extract_world_data(df)

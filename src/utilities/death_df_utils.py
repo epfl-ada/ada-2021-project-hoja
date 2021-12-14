@@ -34,6 +34,7 @@ def combine_cols(df):
     """
     for new_col_name, old_col_names in COMBINED_COLS.items():
         summed = df[old_col_names[0]]
+        df = df.drop(old_col_names[0], axis=1)
         for i in range(1, len(old_col_names)):
             summed += df[old_col_names[i]]
             df = df.drop(old_col_names[i], axis=1)
