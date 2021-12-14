@@ -5,8 +5,10 @@ from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH
 from src.utilities import quotebank_preprocessing_utils as utils
 from src.utilities import synonym_utils as syn_utils
 from src.utilities import add_country as country_utils
+from src.utilities import string_utils as str_utils
 
 from tqdm import tqdm
+
 
 def quotation_classification():
     """
@@ -44,7 +46,7 @@ def quotation_classification_for_file(filename):
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
             #if i ==100000: break
-            quotation = utils.extract_quotation(line)
+            quotation = str_utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)        
             if len(found_keywords) > 0:
                 # Add country of speaker to line

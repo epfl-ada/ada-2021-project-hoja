@@ -12,9 +12,9 @@ import bz2
 import numpy as np
 from numpy import ndarray
 
-from src.utilities import quotebank_preprocessing_utils as utils
 from src.utilities import cluster_quotes_BERT as BERT
 from src.CONSTS import KEYWORD_POISONING, KEYWORD_POISONING_EXTENSIONS
+from src.utilities import string_utils as str_utils
 
 
 class Keyword:
@@ -56,7 +56,7 @@ class Keyword:
         """"Get a sample of size n of the found quotes."""
         quotes = list()  # Extract quotes from matched json lines
         for line in self.json_lines:
-            quotes.append(utils.extract_quotation(line))
+            quotes.append(str_utils.extract_quotation(line))
 
         if len(quotes) > n:  # Take a random subset of the quotes
             indices = np.random.randint(0, len(quotes), n)
@@ -76,7 +76,7 @@ class Keyword:
 
         quotes = list()
         for line in self.json_lines:
-            quotes.append(utils.extract_quotation(line))
+            quotes.append(str_utils.extract_quotation(line))
 
         # cluster data
         cluster = BERT.cluster_quotes(quotes)
