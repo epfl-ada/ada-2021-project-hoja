@@ -11,7 +11,7 @@ import pywikibot
 import requests
 from nltk.corpus import wordnet as wn
 import time
-from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH
+from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS
 
 import nltk
 
@@ -19,8 +19,6 @@ nltk.download('wordnet')
 
 """Functions of increasing number of keywords"""
 
-
-# Main function
 
 def add_new_synonyms():
     """
@@ -33,39 +31,38 @@ def add_new_synonyms():
     start = time.time()
     for key in keywords.keys():
 
-        # TODO: refactor the function, add constants for every 'word'
-        if key != 'diabetes mellitus':  # Prevent getting type 2 diabetes in keywords
-            print(key)
-            baseline_keywords = keywords[key]
-            old_n = len(baseline_keywords)
+        if key == 'diabetes mellitus':
+            continue  # Prevent getting type 2 diabetes in keywords
 
-            keywords[key] = extend_with_wikidata(baseline_keywords)
-            keywords[key] = list(set(keywords[key]))
-            print("words added by wikidata:", len(keywords[key]) - old_n)
-            old_n = len(keywords[key])
+        print(key)
+        baseline_keywords = keywords[key]
+        old_n = len(baseline_keywords)
 
-            keywords[key] = extend_with_wordnet(keywords[key])
-            keywords[key] = list(set(keywords[key]))
+        keywords[key] = extend_with_wikidata(baseline_keywords)
+        keywords[key] = list(set(keywords[key]))
+        print("words added by wikidata:", len(keywords[key]) - old_n)
+        old_n = len(keywords[key])
 
-            # Hard coded exception
-            if 'consumption' in keywords[key]:
-                keywords[key].remove('consumption')
+        keywords[key] = extend_with_wordnet(keywords[key])
+        keywords[key] = list(set(keywords[key]))
 
-            if 'piles' in keywords[key]:
-                keywords[key].remove('piles')
+        remove_any_stopword_keyword(keywords[key])
 
-            if 'intoxication' in keywords[key]:
-                keywords[key].remove('intoxication')
+        print("words added by wordnet:", len(keywords[key]) - old_n)
 
-            print("words added by wordnet:", len(keywords[key]) - old_n)
+        print("time taken:", time.time() - start)
+        print("total keywords:", len(keywords[key]))
 
-            print("time taken:", time.time() - start)
-            print("total keywords:", len(keywords[key]))
+        start = time.time()
 
-            start = time.time()
+        with open(KEYWORDS_JSON_FILE_PATH, 'w+') as fp:
+            json.dump(keywords, fp)
 
-            with open(KEYWORDS_JSON_FILE_PATH, 'w+') as fp:
-                json.dump(keywords, fp)
+
+def remove_any_stopword_keyword(keyword):
+    for stopword in KEYWORD_STOPWORDS:
+        if stopword in keyword:
+            keyword.remove(stopword)
 
 
 """Functions for wikidata aliases"""
@@ -328,7 +325,8 @@ def filter_keywords(keywords):
 def read_keywords(filename) -> dict():
     """Reads keywords in a text file into a dict.
   param: filename: str
-  return: keywords: dict"""
+  return: keywords: dict
+  """
 
     keywords = dict()
 
