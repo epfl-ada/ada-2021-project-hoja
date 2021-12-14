@@ -23,8 +23,8 @@ class Keyword:
         self.name = name
         self.output_filenames = []
         self.json_lines = []
-        self.quotes = pd.DataFrame(
-            columns=["quoteID", "quotation", "speaker", "qids", "date", "numOccurrences", "probas", "urls", "phase"])
+        self.country_url_occurences = dict()
+        self.country_speaker_occurences = dict()
         self.synonym = []
 
     def find_keyword_in_quotation(self, quotation) -> bool:
