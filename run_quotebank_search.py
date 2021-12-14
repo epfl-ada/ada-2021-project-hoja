@@ -43,7 +43,7 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-            #if i ==100000: break
+            if i == 2000: break
             quotation = utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)        
             if len(found_keywords) > 0:
