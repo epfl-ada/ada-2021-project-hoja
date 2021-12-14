@@ -35,6 +35,8 @@ KEYWORD_STOPWORDS = ['consumption',
                      'the base']
 
 KEYWORD_DIABETES_TYPE2 = 'Diabetes mellitus'
+KEYWORD_POISONING = "Poisonings"
+KEYWORD_POISONING_EXTENSIONS = ["lead", "water", "food", "arsenic"]
 
 # To add country of speaker
 COUNTRY_IDENTIFIER = dict()
@@ -45,8 +47,8 @@ URL_END_LIB = dict()
 URL_COUNTRY = dict()
 
 # Years for data processing
-BEGIN_YEAR = 2009
-END_YEAR = 2011
+BEGIN_YEAR = 2008
+END_YEAR = 2017
 
 # Deaths object constants
 DEATHS_INFO_COLUMNS = ["Entity", "Code", "Year"]
