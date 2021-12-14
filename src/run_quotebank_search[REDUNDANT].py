@@ -53,7 +53,7 @@ def quotation_classification_for_file(filename):
 #Start
                   
 if not os.path.isfile(KEYWORDS_JSON_FILE_PATH):
-    syn_utils.add_new_synonyms(KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH)
+    syn_utils.add_new_synonyms()
 # Load some data
 utils.load_speaker_info()
 
