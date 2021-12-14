@@ -23,7 +23,7 @@ def compose_quotebank_filenames() -> list:
     quotes_file_list = []
     for i in range(begin_year, end_year):
         year = create_year_string_from_number(i)
-        quotes_file_list.append(DATA_PATH + "quotes-" + year + ".json.bz2")
+        quotes_file_list.append(DATA_PATH + "quotebank/" + "quotes-" + year + ".json.bz2")
     return quotes_file_list
 
 
