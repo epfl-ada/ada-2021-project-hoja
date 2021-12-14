@@ -16,16 +16,17 @@ def quotation_classification():
     quotes_filenames_list = utils.compose_quotebank_filenames()
 
     for index, filename in enumerate(quotes_filenames_list):
-        print("Elaborating file: " + filename.split("/").pop())
-        quotation_classification_for_file(filename)
-        quotebank.sample_found_quotes(index, "before.txt") #Sample quotes found
-        quotebank.filter_found_quotes_by_clustering() # Cluster some topics and remove wrong quotes
-        
-        quotebank.sample_found_quotes(index, "after.txt") #Sample quotes found
-        quotebank.write_matching_quotes_to_file_for_year(index)
-        
-        
-        quotebank.delete_json_lines_for_all_keywords()
+        if ("2016" in filename) or ("2017" in filename):
+            print("Elaborating file: " + filename.split("/").pop())
+            quotation_classification_for_file(filename)
+            quotebank.sample_found_quotes(index, "before.txt") #Sample quotes found
+            quotebank.filter_found_quotes_by_clustering() # Cluster some topics and remove wrong quotes
+            
+            quotebank.sample_found_quotes(index, "after.txt") #Sample quotes found
+            quotebank.write_matching_quotes_to_file_for_year(index)
+            
+            
+            quotebank.delete_json_lines_for_all_keywords()
 
 
 def quotation_classification_for_file(filename):
@@ -41,7 +42,7 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-            if i ==30000: break
+            #if i ==30000: break
             quotation = utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:

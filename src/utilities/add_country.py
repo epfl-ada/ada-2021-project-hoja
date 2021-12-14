@@ -196,8 +196,8 @@ def assign_country_to_url(urls) -> list:
             country = get_country_website(url)
             URL_COUNTRY[url] = country
             countries.append(country)
-            print("time if not already found: ",time.time()-start)
-            print("Current size of url->country dict is:", len(URL_COUNTRY))
+            #print("time if not already found: ",time.time()-start)
+            #print("Current size of url->country dict is:", len(URL_COUNTRY))
       
     return countries
 
