@@ -6,6 +6,7 @@ Date last modified: 14/12/2021
 Python Version: 3.8
 """
 
+import json
 from src.CONSTS import SPECIAL_CHARS
 
 
