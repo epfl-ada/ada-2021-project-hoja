@@ -10,8 +10,7 @@ import json
 import pywikibot
 import requests
 from nltk.corpus import wordnet as wn
-import time
-from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS
+from src.CO NSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS, KEYWORD_DIABETES_TYPE2
 
 import nltk
 
@@ -28,32 +27,21 @@ def add_new_synonyms():
 
     keywords = read_keywords(KEYWORDS_FILE_PATH)
 
-    start = time.time()
+    print("Adding New Synonyms")
+
     for key in keywords.keys():
 
-        if key == 'diabetes mellitus':
-            continue  # Prevent getting type 2 diabetes in keywords
+        if key == KEYWORD_DIABETES_TYPE2:
+            continue
 
-        print(key)
         baseline_keywords = keywords[key]
-        old_n = len(baseline_keywords)
 
         keywords[key] = extend_with_wikidata(baseline_keywords)
         keywords[key] = list(set(keywords[key]))
-        print("words added by wikidata:", len(keywords[key]) - old_n)
-        old_n = len(keywords[key])
-
         keywords[key] = extend_with_wordnet(keywords[key])
         keywords[key] = list(set(keywords[key]))
 
         remove_any_stopword_keyword(keywords[key])
-
-        print("words added by wordnet:", len(keywords[key]) - old_n)
-
-        print("time taken:", time.time() - start)
-        print("total keywords:", len(keywords[key]))
-
-        start = time.time()
 
         with open(KEYWORDS_JSON_FILE_PATH, 'w+') as fp:
             json.dump(keywords, fp)
@@ -69,10 +57,12 @@ def remove_any_stopword_keyword(keyword):
 
 
 def extend_with_wikidata(keywords):
-    """This fucntions extends keywords list by finding aliases
+    """
+    This functions extends keywords list by finding aliases
   on wikidata for keywords
   param: keywords: list
-  return: keywords: list"""
+  return: keywords: list
+  """
 
     aliases = get_aliases_wikidata(keywords)
 

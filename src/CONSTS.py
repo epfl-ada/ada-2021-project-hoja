@@ -32,6 +32,7 @@ TOPICS_FOR_CLUSTERING = ["fire, heat, and hot substances",
 KEYWORD_STOPWORDS = ['consumption',
                      'piles',
                      'intoxication']
+KEYWORD_DIABETES_TYPE2 = 'diabetes mellitus'
 
 # To add country of speaker
 COUNTRY_IDENTIFIER = dict()
