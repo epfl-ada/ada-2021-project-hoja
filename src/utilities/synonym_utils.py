@@ -10,7 +10,7 @@ import json
 import pywikibot
 import requests
 from nltk.corpus import wordnet as wn
-from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS, KEYWORD_DIABETES_TYPE2
+from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS, KEYWORD_DIABETES_TYPE2, SYNONYM_DICTIONARY
 
 
 import nltk
@@ -197,15 +197,8 @@ def get_synsets_input_words(words, word_type) -> list:
     for word in words:
         word_synsets = wn.synsets(word)
 
-        # Hard coded these exeptions if more are found, they should be added here. TODO: for loop for this
-        if word == 'stroke':
-            synsets.append(wn.synset('stroke.n.03'))
-        elif word == 'aids':
-            synsets.append(wn.synset('AIDS.n.01'))
-        elif word == 'fire':
-            synsets.append(wn.synset('fire.n.01'))
-        elif word == 'consumption':
-            synsets.append(wn.synset('pulmonary_tuberculosis.n.01'))
+        if word in SYNONYM_DICTIONARY:
+            synsets.append(wn.synset(SYNONYM_DICTIONARY[word]))
 
         else:
             for synset in word_synsets:

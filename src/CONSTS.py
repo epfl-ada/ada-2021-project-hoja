@@ -38,6 +38,13 @@ KEYWORD_DIABETES_TYPE2 = 'Diabetes mellitus'
 KEYWORD_POISONING = "Poisonings"
 KEYWORD_POISONING_EXTENSIONS = ["lead", "water", "food", "arsenic"]
 
+SYNONYM_DICTIONARY = {
+        "stroke": "stroke.n.03",
+        "aids": "AIDS.n.01",
+        "fire": "fire.n.01",
+        "consumption": "pulmonary_tuberculosis.n.01"
+}
+
 # To add country of speaker
 COUNTRY_IDENTIFIER = dict()
 SPEAKER_ATTRIBUTES = dict()
