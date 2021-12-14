@@ -4,7 +4,7 @@ from src.QuoteBankData import QuoteBankData
 from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH
 from src.utilities import quotebank_preprocessing_utils as utils
 from src.utilities import synonym_utils as syn_utils
-from src.utilities import add_country as country_utils
+from src.utilities import add_features as features_utils
 
 from tqdm import tqdm
 
@@ -48,7 +48,7 @@ def quotation_classification_for_file(filename):
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)        
             if len(found_keywords) > 0:
                 # Add country of speaker to line
-                line = country_utils.expand_line(line)
+                line = features_utils.expand_line(line)
                 for found_keyword in found_keywords:
                     found_keyword.json_lines.append(line)
 
