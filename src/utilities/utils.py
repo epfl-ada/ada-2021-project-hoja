@@ -29,7 +29,7 @@ def prettify_column(column):
 def prettify_all_column(columns):
     new_cols = []
     for col in columns:
-        prettify_column(col)
+        new_cols.append(prettify_column(col))
     return new_cols
 
 
@@ -37,5 +37,5 @@ def update_col_names(df):
     old_columns = df.columns
     new_columns = prettify_all_column(old_columns)
     for i in range(len(old_columns)):
-        df.rename({old_columns[i]: new_columns[i]})
+        df = df.rename(columns={old_columns[i]: new_columns[i]})
     return df

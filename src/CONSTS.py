@@ -50,6 +50,5 @@ END_YEAR = 2017
 DEATHS_INFO_COLUMNS = ["Entity", "Code", "Year"]
 COMBINED_COLS = {"War and terrorism": ["Conflict and terrorism", "Terrorism"], 
                  "Exposure to forces of nature": ["Exposure to forces of nature", "Environmental heat and cold exposure"],
-                 "Suicide": ["Suicide", "Self-harm"],
-                 "Nutritional deficiencies": ["Nutritional deficiencies", "Protein energy malnutrition"],
+                 "Nutritional deficiencies": ["Nutritional deficiencies", "Protein-energy malnutrition"],
                  "Drug use and alcoholism": ["Drug use disorders", "Alcohol use disorders"]}

@@ -24,9 +24,10 @@ class Deaths:
         self.percentage_df = percentage_of_total_count(self.df, self.quant_columns)
     
     def modify_df(self, df, rename_cols, drop_cols):
-        
+
         df = modify_cols(df, rename_cols, drop_cols)
         df = update_col_names(df)
+        df = combine_cols(df)
         self.columns = df.columns
         self.quant_columns =  [col for col in self.columns if col not in DEATHS_INFO_COLUMNS]
         df = extract_world_data(df)
