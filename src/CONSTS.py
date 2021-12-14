@@ -32,7 +32,9 @@ TOPICS_FOR_CLUSTERING = ["Fire, heat, and hot substances",
 KEYWORD_STOPWORDS = ['consumption',
                      'piles',
                      'intoxication']
-KEYWORD_DIABETES_TYPE2 = 'diabetes mellitus'
+
+KEYWORD_DIABETES_TYPE2 = 'Diabetes mellitus'
+KEYWORD_TERRORISM_WAR = 'War and terrorism'
 
 # To add country of speaker
 COUNTRY_IDENTIFIER = dict()
@@ -43,8 +45,8 @@ URL_END_LIB = dict()
 URL_COUNTRY = dict()
 
 # Years for data processing
-BEGIN_YEAR = 2008
-END_YEAR = 2017
+BEGIN_YEAR = 2010
+END_YEAR = 2011
 
 # Deaths object constants
 DEATHS_INFO_COLUMNS = ["Entity", "Code", "Year"]

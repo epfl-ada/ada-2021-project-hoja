@@ -196,8 +196,8 @@ def assign_country_to_url(urls) -> list:
             country = get_country_website(url)
             URL_COUNTRY[url] = country
             countries.append(country)
-            #print("time if not already found: ",time.time()-start)
-            #print("Current size of url->country dict is:", len(URL_COUNTRY))
+            print("time if not already found: ",time.time()-start)
+            print("Current size of url->country dict is:", len(URL_COUNTRY))
       
     return countries
 
@@ -207,6 +207,7 @@ def expand_line(line):
     return: expanded_line: json"""
     # load from json
     parsed = json.loads(line)
+    
     # adapt for country speaker
     q_person = parsed['qids']
     if q_person:
@@ -215,17 +216,16 @@ def expand_line(line):
         speaker_country = [] 
     parsed['country_speaker'] = speaker_country
     
-    
     # adapt for country url
     urls = parsed['urls']
     unique_urls = list()
     for url in urls:
         unique_urls.append(url.split('/')[2])
-    unique_urls = list(set(unique_urls))
-    
-    parsed['unique_urls'] = unique_urls
+    unique_urls = list(set(unique_urls)) 
+    parsed['n_appearances'] = len(unique_urls)
     url_countries = assign_country_to_url(unique_urls)
     parsed['country_urls'] = url_countries
+    
     # back to json
     expanded_line = json.dumps(parsed).encode('utf-8')
     return expanded_line

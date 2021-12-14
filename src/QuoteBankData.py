@@ -85,7 +85,7 @@ class QuoteBankData:
         if sample:
             years = utils.get_all_years()   
             output =  GENERATED_PATH + years[year_index] + "/" + output_name
-            with open(output, 'w+') as the_file:
+            with open(output, 'w+', encoding="utf-8") as the_file:
                 for element in sample:
                     the_file.write(element + "\n")  
     

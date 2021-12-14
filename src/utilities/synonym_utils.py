@@ -10,7 +10,8 @@ import json
 import pywikibot
 import requests
 from nltk.corpus import wordnet as wn
-from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS, KEYWORD_DIABETES_TYPE2
+from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH, KEYWORD_STOPWORDS, KEYWORD_DIABETES_TYPE2, KEYWORD_TERRORISM_WAR
+
 
 import nltk
 
@@ -27,7 +28,7 @@ def add_new_synonyms():
 
     keywords = read_keywords(KEYWORDS_FILE_PATH)
 
-    print("Adding New Synonyms")
+    print("Adding New Synonyms...")
 
     for key in keywords.keys():
 
@@ -40,7 +41,8 @@ def add_new_synonyms():
         keywords[key] = list(set(keywords[key]))
         keywords[key] = extend_with_wordnet(keywords[key])
         keywords[key] = list(set(keywords[key]))
-
+        if key == KEYWORD_TERRORISM_WAR:
+            keywords[key].remove('the base')
         remove_any_stopword_keyword(keywords[key])
 
         with open(KEYWORDS_JSON_FILE_PATH, 'w+') as fp:
