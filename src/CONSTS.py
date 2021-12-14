@@ -32,8 +32,8 @@ SPEAKER_ATTRIBUTES = dict()
 URL_END_LIB = dict()
 URL_COUNTRY = dict()
 
-BEGIN_YEAR = 2011
-END_YEAR = 2011
+BEGIN_YEAR = 2008
+END_YEAR = 2017
 
 # Deaths object constants
 DEATHS_INFO_COLUMNS = ["Entity", "Code", "Year"]
