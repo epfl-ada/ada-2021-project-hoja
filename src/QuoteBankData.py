@@ -9,6 +9,7 @@ Python Version: 3.8
 from src.Keyword import Keyword
 from src.CONSTS import KEYWORDS_JSON_FILE_PATH, GENERATED_PATH, TOPICS_FOR_CLUSTERING
 from src.utilities import quotebank_preprocessing_utils as utils
+from src.utilities import string_utils as str_utils
 import pandas as pd
 import json
 
@@ -124,7 +125,7 @@ class QuoteBankData:
         for k in self.keywords:
             for year in years_for_file:
                 directory_for_year = year + "/"
-                relative_path_for_file_for_year = utils.format_filenames_nicely(k.name) + "-" + year + ".json.bz2"
+                relative_path_for_file_for_year = str_utils.format_filenames_nicely(k.name) + "-" + year + ".json.bz2"
                 k.output_filenames.append(GENERATED_PATH + directory_for_year + relative_path_for_file_for_year)
 
     def print_pretty_keywords(self):

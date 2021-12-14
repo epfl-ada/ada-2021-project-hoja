@@ -16,6 +16,9 @@ SPEAKER_ATTRIBUTES_PATH = DATA_PATH + "speaker_attributes.parquet"
 URL_END_PATH = DATA_PATH + "country_url_end.txt"
 URL_COUNTRY_PATH = DATA_PATH + "url_country_lib.json"
 
+# Regular expression chars
+SPECIAL_CHARS = "!#$%^&*()/ "
+
 # Colors
 COLORS = ["red", "green", "blue", "brown", "yellow", "purple", "orange", "pink"]
 
