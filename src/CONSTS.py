@@ -20,13 +20,13 @@ URL_COUNTRY_PATH = DATA_PATH + "url_country_lib.json"
 COLORS = ["red", "green", "blue", "brown", "yellow", "purple", "orange", "pink"]
 
 # Topics for clustering
-TOPICS_FOR_CLUSTERING = ["fire, heat, and hot substances",
-                          "environmental heat and cold exposure",
-                          "road injuries",
-                          "war and terrorism",
-                          "interpersonal violence",
-                          "poisonings",
-                          "drowning"]
+TOPICS_FOR_CLUSTERING = ["Fire, heat, and hot substances",
+                          "Environmental heat and cold exposure",
+                          "Road injuries",
+                          "War and terrorism",
+                          "Interpersonal violence",
+                          "Poisonings",
+                          "Drowning"]
 
 # Keyword Stopword
 KEYWORD_STOPWORDS = ['consumption',
@@ -50,3 +50,8 @@ END_YEAR = 2011
 
 # Deaths object constants
 DEATHS_INFO_COLUMNS = ["Entity", "Code", "Year"]
+COMBINED_COLS = {"War and terrorism": ["Conflict and terrorism", "Terrorism"], 
+                 "Exposure to forces of nature": ["Exposure to forces of nature", "Environmental heat and cold exposure"],
+                 "Suicide": ["Suicide", "Self-harm"],
+                 "Nutritional deficiencies": ["Nutritional deficiencies", "Protein energy malnutrition"],
+                 "Drug use and alcoholism": ["Drug use disorders", "Alcohol use disorders"]}
