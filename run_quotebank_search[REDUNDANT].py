@@ -4,7 +4,7 @@ from src.QuoteBankData import QuoteBankData
 from src.CONSTS import KEYWORDS_FILE_PATH, KEYWORDS_JSON_FILE_PATH
 from src.utilities import quotebank_preprocessing_utils as utils
 from src.utilities import synonym_utils as syn_utils
-from src.utilities import add_country as country_utils
+from utilities import add_features as features_utils
 
 from tqdm import tqdm
 
@@ -16,17 +16,16 @@ def quotation_classification():
     quotes_filenames_list = utils.compose_quotebank_filenames()
 
     for index, filename in enumerate(quotes_filenames_list):
-        if ("2016" in filename) or ("2017" in filename):
-            print("Elaborating file: " + filename.split("/").pop())
-            quotation_classification_for_file(filename)
-            quotebank.sample_found_quotes(index, "before.txt") #Sample quotes found
-            quotebank.filter_found_quotes_by_clustering() # Cluster some topics and remove wrong quotes
-            
-            quotebank.sample_found_quotes(index, "after.txt") #Sample quotes found
-            quotebank.write_matching_quotes_to_file_for_year(index)
-            
-            
-            quotebank.delete_json_lines_for_all_keywords()
+        print("Elaborating file: " + filename.split("/").pop())
+        quotation_classification_for_file(filename)
+        quotebank.sample_found_quotes(index, "before.txt") #Sample quotes found
+        quotebank.filter_found_quotes_by_clustering() # Cluster some topics and remove wrong quotes
+        
+        quotebank.sample_found_quotes(index, "after.txt") #Sample quotes found
+        quotebank.write_matching_quotes_to_file_for_year(index)
+        
+        
+        quotebank.delete_json_lines_for_all_keywords()
 
 
 def quotation_classification_for_file(filename):
@@ -42,12 +41,12 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-            #if i ==30000: break
+            if i == 1000: break
             quotation = utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:
                 # Add country of speaker to line
-                line = country_utils.expand_line(line)
+                line = features_utils.expand_line(line)
                 for found_keyword in found_keywords:
                     found_keyword.json_lines.append(line)
 
@@ -69,5 +68,7 @@ quotebank.create_json_dumps_filenames_for_each_keyword()
 quotation_classification()
 
 utils.safe_url_country_lib()
+syn_utils.add_new_synonyms()
+utils.load_speaker_info()
 
 
