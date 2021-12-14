@@ -31,10 +31,12 @@ TOPICS_FOR_CLUSTERING = ["Fire, heat, and hot substances",
 # Keyword Stopword
 KEYWORD_STOPWORDS = ['consumption',
                      'piles',
-                     'intoxication']
+                     'intoxication',
+                     'the base']
 
 KEYWORD_DIABETES_TYPE2 = 'Diabetes mellitus'
-KEYWORD_TERRORISM_WAR = 'War and terrorism'
+KEYWORD_POISONING = "Poisonings"
+KEYWORD_POISONING_EXTENSIONS = ["lead", "water", "food", "arsenic"]
 
 # To add country of speaker
 COUNTRY_IDENTIFIER = dict()
