@@ -32,13 +32,14 @@ class QuoteBankData:
         return all_keyword_names
 
     def get_keyword_by_name(self, name) -> Keyword:
+        #TODO delete?
         """
         Given name return the corresponding Keyword object from self.keyword list
         :param name: str
         :return: Keyword
         """
         for k in self.keywords:
-            if k.name == name:
+            if k.name.lower() == name:
                 return k
 
     def read_keywords_from_file(self):
@@ -48,12 +49,11 @@ class QuoteBankData:
         as synonyms
         """
 
-        # TODO this part must conform 
         with open(KEYWORDS_JSON_FILE_PATH, "r") as file:
             keywords_json_list = json.load(file)
 
             for i, key in enumerate(keywords_json_list.keys()):
-                self.keywords.append(Keyword(key))
+                self.keywords.append(Keyword(key.capitalize()))
                 self.keywords[i].synonym = keywords_json_list[key]
 
     def match_quotation_with_any_keyword(self, quotation) -> list:

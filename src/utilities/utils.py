@@ -19,3 +19,23 @@ def percentage_of_total_count(df, columns):
         df[column] = (df[column]/df["Total count"])*100
     df = df.drop("Total count", axis=1)
     return df
+
+
+def prettify_column(column):
+    column = column.lower().replace("_", " ").capitalize()
+    return column
+
+
+def prettify_all_column(columns):
+    new_cols = []
+    for col in columns:
+        prettify_column(col)
+    return new_cols
+
+
+def update_col_names(df):
+    old_columns = df.columns
+    new_columns = prettify_all_column(old_columns)
+    for i in range(len(old_columns)):
+        df.rename({old_columns[i]: new_columns[i]})
+    return df

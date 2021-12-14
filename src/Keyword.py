@@ -88,7 +88,7 @@ class Keyword:
         top_n_words = BERT.extract_top_n_words_per_topic(tf_idf, count, quotes_per_topic, n=10)
         # Get topics which have at least 2 words in their top 10 which are also in the keyword list
         keywords = self.synonym
-        if self.name == "poisonings":   # hard coded exception
+        if self.name == "Poisonings":   # hard coded exception TODO:add to constant
             keywords.extend(["lead", "water", "food","arsenic"])
             
         correct_clusters = BERT.select_correct_topics(top_n_words, keywords)

@@ -28,6 +28,21 @@ def modify_cols(df, rename_cols = {}, drop_cols=[]):
     return df
 
 
+def combine_cols(df):
+    """
+    Renames and drops columns, and drops all rows with Year < 2007.
+    """
+    df = df[df["Year"] > 2007]
+    df = df.drop(drop_cols, axis=1)
+    cols = list(df.columns)
+    for i, col in enumerate(cols):
+        if len(col.split(" - ")) > 1:
+            rename_cols[col] = col.split(" - ")[1].strip().replace(" ", "_")
+    df = df.rename(columns=rename_cols)
+    df = df.reset_index(drop=True)
+    return df
+
+
 def extract_world_data(df):
     """
     Drop all rows where Entity != World.
