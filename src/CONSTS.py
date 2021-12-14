@@ -35,6 +35,8 @@ KEYWORD_STOPWORDS = ['consumption',
                      'the base']
 
 KEYWORD_DIABETES_TYPE2 = 'Diabetes mellitus'
+KEYWORD_POISONING = "Poisonings"
+KEYWORD_POISONING_EXTENSIONS = ["lead", "water", "food", "arsenic"]
 
 # To add country of speaker
 COUNTRY_IDENTIFIER = dict()
