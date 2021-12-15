@@ -7,11 +7,12 @@ Python Version: 3.8
 """
 
 from src.Keyword import Keyword
-from src.CONSTS import KEYWORDS_JSON_FILE_PATH, GENERATED_PATH, TOPICS_FOR_CLUSTERING
+from src.CONSTS import KEYWORDS_JSON_FILE_PATH, GENERATED_PATH, TOPICS_FOR_CLUSTERING, CATEGORY_MAPPING, DEATHS_INFO_COLUMNS
 from src.utilities import quotebank_preprocessing_utils as utils
 from src.utilities import string_utils as str_utils
 import pandas as pd
 import json
+import numpy as np
 
 # TODO: change class name
 class QuoteBankData:
@@ -20,7 +21,10 @@ class QuoteBankData:
         self.name = name
         self.keywords = keywords
         self.quotes_occurrences_df = pd.DataFrame(columns=["Year"] + self.get_all_keyword_names())
-        self.quotes_percentage_df = pd.DataFrame(columns=["Year"] + self.get_all_keyword_names())
+        self.quotes_percentage_df = self.quotes_occurrences_df.copy()
+        self.cat_quotes_occurrences_df = pd.DataFrame(columns=["Year"] + list(CATEGORY_MAPPING.keys()))
+        self.cat_quotes_percentage_df = self.cat_quotes_occurrences_df.copy()
+
 
     def get_all_keyword_names(self) -> list:
         """
@@ -32,6 +36,7 @@ class QuoteBankData:
             all_keyword_names.append(k.name)
         return all_keyword_names
 
+
     def get_keyword_by_name(self, name) -> Keyword:
         #TODO delete?
         """
@@ -42,6 +47,7 @@ class QuoteBankData:
         for k in self.keywords:
             if k.name.lower() == name:
                 return k
+
 
     def read_keywords_from_file(self):
         """
@@ -57,6 +63,7 @@ class QuoteBankData:
                 self.keywords.append(Keyword(key.capitalize()))
                 self.keywords[i].synonym = keywords_json_list[key]
 
+
     def match_quotation_with_any_keyword(self, quotation) -> list:
         """
         Given a quotation return the matching keyword, if any
@@ -68,6 +75,7 @@ class QuoteBankData:
             if k.find_keyword_in_quotation(quotation):
                 found_keywords.append(k)
         return found_keywords
+      
       
     def sample_found_quotes(self, year_index, output_name):
         """
@@ -109,12 +117,14 @@ class QuoteBankData:
         for k in self.keywords:
             k.assign_quote_to_file_for_year(year_index)
 
+
     def delete_json_lines_for_all_keywords(self):
         """
         Clear all the json_lines associated to every keyword
         """
         for k in self.keywords:
             k.json_lines.clear()
+
 
     def create_json_dumps_filenames_for_each_keyword(self):
         """
@@ -128,6 +138,7 @@ class QuoteBankData:
                 relative_path_for_file_for_year = str_utils.format_filenames_nicely(k.name) + "-" + year + ".json.bz2"
                 k.output_filenames.append(GENERATED_PATH + directory_for_year + relative_path_for_file_for_year)
 
+
     def print_pretty_keywords(self):
         """
         Print all keyword names and associated synonyms in a nice format
@@ -140,6 +151,7 @@ class QuoteBankData:
                     print("Printing synonyms")
                 print("\t" + tks)
 
+
     def print_pretty_keywords_filenames(self):
         """
         For each keyword, print all the associated json filenames
@@ -151,3 +163,14 @@ class QuoteBankData:
                 if i == 0:
                     print("Printing filenames")
                 print("\t" + tks)
+
+
+    def map_df_causes_to_categories(self):
+        cause_df = self.quotes_occurrences_df.copy()
+        self.cat_quotes_occurrences_df["Year"] = cause_df["Year"]
+        for cat_col in self.cat_quotes_occurrences_df.columns:
+            if cat_col in DEATHS_INFO_COLUMNS: continue
+            cat_values = np.zeros(cause_df.shape[0])
+            for cause_col in CATEGORY_MAPPING[cat_col]:
+                cat_values += cause_df[cause_col].to_numpy()
+            self.cat_quotes_occurrences_df[cat_col] = cat_values
