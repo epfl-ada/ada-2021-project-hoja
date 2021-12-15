@@ -197,14 +197,12 @@ def assign_country_to_url(urls) -> list:
     
     countries = list()
     for url in urls:
-        start = time.time()
         if url in URL_COUNTRY:
             countries.append(URL_COUNTRY[url])
         else:
             country = get_country_website(url)
             URL_COUNTRY[url] = country
             countries.append(country)
-            print("time if not already found: ",time.time()-start)
             print("Current size of url->country dict is:", len(URL_COUNTRY))
       
     return countries
@@ -229,7 +227,7 @@ def expand_line(line):
     unique_urls = list()
     for url in urls:
         new_url = url.split('/')[2]
-        new_url = url.split('?')[0]
+        new_url = new_url.split('?')[0]
         unique_urls.append(new_url)
     unique_urls = list(set(unique_urls)) 
     parsed['n_appearances'] = len(unique_urls)
