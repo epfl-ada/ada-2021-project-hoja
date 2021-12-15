@@ -20,7 +20,7 @@ URL_COUNTRY_PATH = DATA_PATH + "url_country_lib.json"
 SPECIAL_CHARS = "!#$%^&*()/ "
 
 # Colors
-COLORS = ["003F5C", "2F4B7C", "665191", "A05195", "D45087", "F95D6A", "FF7C43", "FFA600"]
+COLORS = ["003F5C", "2F4B7C", "665191", "A05195", "D45087", "F95D6A", "FF7C43", "FF600"]
 
 # Topics for clustering
 TOPICS_FOR_CLUSTERING = ["Fire, heat, and hot substances",
