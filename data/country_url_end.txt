@@ -94,7 +94,7 @@ Georgia	.ge
 Germany	.de 
 Ghana	.gh
 Gibraltar	.gi
-Great Britain	.uk
+United Kingdom	.uk
 Greece	.gr
 Greenland	.gl
 Grenada	.gd
