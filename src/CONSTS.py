@@ -25,7 +25,7 @@ COLORS = ["003F5C", "2F4B7C", "665191", "A05195", "D45087", "F95D6A", "FF7C43", 
 
 # Topics for clustering
 TOPICS_FOR_CLUSTERING = ["Fire, heat, and hot substances",
-                          "Environmental heat and cold exposure",
+                          "Exposure to forces of nature",
                           "Road injuries",
                           "War and terrorism",
                           "Interpersonal violence",
