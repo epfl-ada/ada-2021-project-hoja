@@ -35,7 +35,9 @@ def plot_stacked_area_chart(df_original, x_axis, y_axis_original, y_label, title
     
     df = df_original.copy()
     y_axis = y_axis_original.copy()
-    other = np.zeros(10)
+    
+    other = np.zeros(df.shape[0])
+    
     for column in df:
         if column in DEATHS_INFO_COLUMNS: continue
         if df[column].max() < percentage_treshold:
@@ -47,6 +49,7 @@ def plot_stacked_area_chart(df_original, x_axis, y_axis_original, y_label, title
     df = df.assign(Other=other)
     
     ax = df.plot.area(x=x_axis, title=title, xlabel=x_axis, ylabel=y_label)
+    
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles[::-1], labels[::-1], loc='center left', bbox_to_anchor=(1, 0.5))
     
