@@ -16,6 +16,7 @@ COUNTRY_EXTENSIONS_FILE_PATH = DATA_PATH + "country_url_end.txt"
 SPEAKER_ATTRIBUTES_PATH = DATA_PATH + "speaker_attributes.parquet"
 URL_END_PATH = DATA_PATH + "country_url_end.txt"
 URL_COUNTRY_PATH = DATA_PATH + "url_country_lib.json"
+ID_COUNTRY_PATH = DATA_PATH +  "id_country_lib.json"
 
 # Regular expression chars
 SPECIAL_CHARS = "!#$%^&*()/ "

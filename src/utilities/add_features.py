@@ -204,7 +204,6 @@ def assign_country_to_url(urls) -> list:
             country = get_country_website(url)
             URL_COUNTRY[url] = country
             countries.append(country)
-            print("Current size of url->country dict is:", len(URL_COUNTRY))
       
     return countries
 
@@ -229,7 +228,9 @@ def expand_line(line):
     for url in urls:
         new_url = url.split('/')[2]
         new_url = new_url.split('?')[0]
+        new_url = new_url.split(':')[0]
         unique_urls.append(new_url)
+
     unique_urls = list(set(unique_urls)) 
     parsed['n_appearances'] = len(unique_urls)
     url_countries = assign_country_to_url(unique_urls)
