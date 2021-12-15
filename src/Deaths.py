@@ -16,8 +16,9 @@ from src.utilities.utils import *
 
 class Deaths:
 
-    def __init__(self, name, path, rename_cols = {}, drop_cols = []):
+    def __init__(self, name, region, path, rename_cols = {}, drop_cols = []):
         self.name = name
+        self.region =  region
         self.columns = []
         self.quant_columns = []
         self.df = self.modify_df(pd.read_csv(path), rename_cols, drop_cols)
@@ -31,7 +32,7 @@ class Deaths:
             df = combine_cols(df)
         self.columns = df.columns
         self.quant_columns =  [col for col in self.columns if col not in DEATHS_INFO_COLUMNS]
-        df = extract_world_data(df)
+        df = extract_region_data(df, self.region)
         
         df = update_nan_values(df, self.quant_columns)
         

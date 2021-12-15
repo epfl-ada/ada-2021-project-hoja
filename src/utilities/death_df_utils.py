@@ -42,11 +42,11 @@ def combine_cols(df):
     return df
 
 
-def extract_world_data(df):
+def extract_region_data(df, region):
     """
     Drop all rows where Entity != World.
     """
-    df = df[df["Entity"] == "World"]
+    df = df[df["Entity"] == region]
     df = df.reset_index(drop=True)
     return df
 
