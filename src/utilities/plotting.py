@@ -47,7 +47,9 @@ def plot_stacked_area_chart(df_original, x_axis, y_axis_original, y_label, title
             y_axis.remove(column)
     
     df = df[y_axis +[x_axis]]
-    df = df.assign(Other=other)
+    
+    if (other!=np.zeros(df.shape[0])).all():
+        df = df.assign(Other=other)
     
     ax = df.plot.area(x=x_axis, title=title, xlabel=x_axis, ylabel=y_label)
     
