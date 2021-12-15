@@ -24,7 +24,11 @@ def get_country_from_wikidata(q_country) -> str:
     country = None
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    item = pywikibot.ItemPage(repo, q_country)
+    try:
+        item = pywikibot.ItemPage(repo, q_country)
+    except ConnectionError:
+        return country
+      
     item_dict = item.get()
     try: 
         country = item_dict['labels']['en']
@@ -128,7 +132,7 @@ def get_identifier(item) -> str:
     response = None
     try:
         response = requests.get('https://www.wikidata.org/w/api.php?', params).json()
-    except ValueError:
+    except ValueError or ConnectionError:
         pass
     
     if response:
@@ -138,7 +142,11 @@ def get_identifier(item) -> str:
 def get_country_from_identifier(q_website):
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    item = pywikibot.ItemPage(repo, q_website)
+    try:
+      item = pywikibot.ItemPage(repo, q_website)
+    except ConnectionError:
+      return None
+    
     country = None
     if not item.isRedirectPage():
         item_dict = item.get()
@@ -189,14 +197,12 @@ def assign_country_to_url(urls) -> list:
     
     countries = list()
     for url in urls:
-        start = time.time()
         if url in URL_COUNTRY:
             countries.append(URL_COUNTRY[url])
         else:
             country = get_country_website(url)
             URL_COUNTRY[url] = country
             countries.append(country)
-            print("time if not already found: ",time.time()-start)
             print("Current size of url->country dict is:", len(URL_COUNTRY))
       
     return countries
@@ -220,7 +226,9 @@ def expand_line(line):
     urls = parsed['urls']
     unique_urls = list()
     for url in urls:
-        unique_urls.append(url.split('/')[2])
+        new_url = url.split('/')[2]
+        new_url = new_url.split('?')[0]
+        unique_urls.append(new_url)
     unique_urls = list(set(unique_urls)) 
     parsed['n_appearances'] = len(unique_urls)
     url_countries = assign_country_to_url(unique_urls)

@@ -34,14 +34,15 @@ def add_new_synonyms():
 
         if key == KEYWORD_DIABETES_TYPE2:
             continue
-
-        baseline_keywords = keywords[key]
-
-        keywords[key] = extend_with_wikidata(baseline_keywords)
-        keywords[key] = list(set(keywords[key]))
-        keywords[key] = extend_with_wordnet(keywords[key])
-        keywords[key] = list(set(keywords[key]))
-        remove_any_stopword_keyword(keywords[key])
+          
+        else:
+            baseline_keywords = keywords[key]
+    
+            keywords[key] = extend_with_wikidata(baseline_keywords)
+            keywords[key] = list(set(keywords[key]))
+            keywords[key] = extend_with_wordnet(keywords[key])
+            keywords[key] = list(set(keywords[key]))
+            remove_any_stopword_keyword(keywords[key])
 
         with open(KEYWORDS_JSON_FILE_PATH, 'w+') as fp:
             json.dump(keywords, fp)
