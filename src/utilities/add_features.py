@@ -24,7 +24,11 @@ def get_country_from_wikidata(q_country) -> str:
     country = None
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    item = pywikibot.ItemPage(repo, q_country)
+    try:
+        item = pywikibot.ItemPage(repo, q_country)
+    except ConnectionError:
+        return country
+      
     item_dict = item.get()
     try: 
         country = item_dict['labels']['en']
@@ -128,7 +132,7 @@ def get_identifier(item) -> str:
     response = None
     try:
         response = requests.get('https://www.wikidata.org/w/api.php?', params).json()
-    except ValueError:
+    except ValueError or ConnectionError:
         pass
     
     if response:
@@ -138,7 +142,11 @@ def get_identifier(item) -> str:
 def get_country_from_identifier(q_website):
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    item = pywikibot.ItemPage(repo, q_website)
+    try:
+      item = pywikibot.ItemPage(repo, q_website)
+    except ConnectionError:
+      return None
+    
     country = None
     if not item.isRedirectPage():
         item_dict = item.get()
