@@ -9,6 +9,7 @@ Python Version: 3.8
 # File Paths
 DATA_PATH = './data/'
 GENERATED_PATH = './generated/'
+GENERATED_IMAGES_PATH = GENERATED_PATH + "images/"
 KEYWORDS_FILE_PATH = DATA_PATH + "keywords.txt"
 KEYWORDS_JSON_FILE_PATH = DATA_PATH + "keywords.json"
 COUNTRY_EXTENSIONS_FILE_PATH = DATA_PATH + "country_url_end.txt"

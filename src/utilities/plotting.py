@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import random
-from src.CONSTS import COLORS, DEATHS_INFO_COLUMNS
+from src.CONSTS import COLORS, DEATHS_INFO_COLUMNS, GENERATED_IMAGES_PATH
 import numpy as np
 
 def plot_line_chart(df, x_axis, y_axis, y_label, title, log_y = True, y_start_0 = False):
@@ -25,6 +25,7 @@ def plot_line_chart(df, x_axis, y_axis, y_label, title, log_y = True, y_start_0 
     plt.xlabel = x_axis
     plt.ylabel = y_label
     plt.title = title
+    save_plt(title)
     plt.show()
     
 
@@ -56,4 +57,9 @@ def plot_stacked_area_chart(df_original, x_axis, y_axis_original, y_label, title
     plt.xlabel = x_axis
     plt.ylabel = y_label
     plt.title = title
+    save_plt(title)
     plt.show()
+
+
+def save_plt(name):
+    plt.savefig(GENERATED_IMAGES_PATH + name + '.png', bbox_inches = 'tight') 
