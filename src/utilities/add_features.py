@@ -228,7 +228,9 @@ def expand_line(line):
     urls = parsed['urls']
     unique_urls = list()
     for url in urls:
-        unique_urls.append(url.split('/')[2])
+        new_url = url.split('/')[2]
+        new_url = url.split('?')[0]
+        unique_urls.append(new_url)
     unique_urls = list(set(unique_urls)) 
     parsed['n_appearances'] = len(unique_urls)
     url_countries = assign_country_to_url(unique_urls)
