@@ -4,3 +4,4 @@ apicache-py3/
 __pycache__/
 *.crc
 *.parquet
+*.json
