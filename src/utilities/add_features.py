@@ -175,7 +175,8 @@ def get_country_website(url) -> str:
     url_ending = url.split('.')[-1]
     if url_ending in URL_END_LIB:
         country = URL_END_LIB[url_ending]
-
+    
+    """ Change this back before Final push
     else:
         q_website = get_identifier(url)
         if q_website:
@@ -187,7 +188,7 @@ def get_country_website(url) -> str:
             q_website = get_identifier(url_try)
             if q_website:
                 country = get_country_from_identifier(q_website)
-            
+    """      
     return country
 
 def assign_country_to_url(urls) -> list:
