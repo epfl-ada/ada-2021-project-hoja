@@ -44,7 +44,7 @@ def combine_cols(df):
 
 def extract_region_data(df, region):
     """
-    Drop all rows where Entity != World.
+    Drop all rows where Entity != the selected region.
     """
     df = df[df["Entity"] == region]
     df = df.reset_index(drop=True)
@@ -58,9 +58,11 @@ def update_nan_values(df, quant_columns):
     for col in quant_columns:
         train_data = []
         pred_years = []
+        
         for year in range(BEGIN_YEAR, END_YEAR + 1):
             val = df.loc[df['Year'] == year, col].iloc[0]
             if math.isnan(val):
+                print("nan")
                 pred_years.append(year)
             else: train_data.append([year, val])
         
