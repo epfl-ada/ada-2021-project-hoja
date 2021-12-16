@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import random
-from src.CONSTS import COLORS, DEATHS_INFO_COLUMNS, GENERATED_IMAGES_PATH
+from src.CONSTS import COLORS, DEATHS_INFO_COLUMNS, GENERATED_IMAGES_PATH, COLOR_MAP
 import numpy as np
 
 def plot_line_chart(df, x_axis, y_axis, y_label, title, log_y = True, y_start_0 = False):
@@ -13,7 +13,7 @@ def plot_line_chart(df, x_axis, y_axis, y_label, title, log_y = True, y_start_0 
         y_axis = random.sample(y_axis, 7)
     
     for i, col in enumerate(y_axis):
-        df.plot(kind='line', x=x_axis, y=col, ax=ax, color=COLORS[i%len(COLORS)], logy=log_y, title=title, xlabel=x_axis, ylabel=y_label)
+        df.plot(kind='line', x=x_axis, y=col, ax=ax, colormap=COLOR_MAP, logy=log_y, title=title, xlabel=x_axis, ylabel=y_label)
     
     if y_start_0:
         if log_y:
@@ -51,7 +51,7 @@ def plot_stacked_area_chart(df_original, x_axis, y_axis_original, y_label, title
     if (other!=np.zeros(df.shape[0])).all():
         df = df.assign(Other=other)
     
-    ax = df.plot.area(x=x_axis, title=title, xlabel=x_axis, ylabel=y_label)
+    ax = df.plot.area(x=x_axis, title=title, xlabel=x_axis, ylabel=y_label, colormap = COLOR_MAP)
     
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles[::-1], labels[::-1], loc='center left', bbox_to_anchor=(1, 0.5))
