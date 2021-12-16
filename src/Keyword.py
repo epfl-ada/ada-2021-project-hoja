@@ -51,6 +51,17 @@ class Keyword:
             for line in self.json_lines:
                 output_file.write((json.dumps(json.loads(line)) + '\n').encode('utf-8'))
         output_file.close()
+        
+    def read_quotes_from_file_for_year(self, year_index):
+        """
+        For a single keyword, read previously assigned quote from file.
+        :param year_index
+        """
+        with bz2.open(self.output_filenames[year_index], 'rb') as input_file:
+            for line in input_file:
+                self.json_lines.append(line)
+        input_file.close()
+        
 
     def get_sample_of_found_quotes(self, n=10):
         """"Get a sample of size n of the found quotes."""
@@ -103,6 +114,7 @@ class Keyword:
             lines_to_keep = np.logical_or(lines_to_keep, quotes_df['Topic'] == cluster)
 
         self.json_lines = np.array(self.json_lines)[lines_to_keep].tolist()
+
 
     def print_pretty_json_lines_info(self):
         """
