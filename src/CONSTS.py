@@ -18,6 +18,7 @@ SPEAKER_ATTRIBUTES_PATH = DATA_PATH + "speaker_attributes.parquet"
 URL_END_PATH = DATA_PATH + "country_url_end.txt"
 URL_COUNTRY_PATH = DATA_PATH + "url_country_lib.json"
 ID_COUNTRY_PATH = DATA_PATH +  "id_country_lib.json"
+DEATH_BY_CAUSE_PATH = "data/annual_number_of_deaths_by_cause.csv"
 
 # Causes
 ALZHEIMER_DISEASE_AND_OTHER_DEMENTIAS = 'Alzheimer disease and other dementias'
@@ -120,6 +121,16 @@ ALL_COUNTRIES_CODE = ['af', 'ax', 'al', 'dz', 'as', 'ad', 'ao', 'ai', 'aq', 'ag'
                     'so', 'za', 'gs', 'ss', 'es', 'lk', 'sd', 'sr', 'sj', 'sz', 'se', 'ch', 'sy', 'tw', 'tj', 'tz', 'th',
                     'tl', 'tg', 'tk', 'to', 'tt', 'tn', 'tr', 'tm', 'tc', 'tv', 'ug', 'ua', 'ae', 'gb', 'us', 'um', 'uy',
                     'uz', 'vu', 've', 'vn', 'vg', 'vi', 'wf', 'eh', 'ye', 'zm', 'zw', 'gq']
+
+REGIONS = ['Latin America and Caribbean','North Africa and Middle East','Sub-Saharan Africa','Oceania','Central Asia', 'East Asia','South Asia', 'Southeast Asia','Central Europe',"Eastern Europe", 'Western Europe',  'United States','Canada']
+
+MAIN_REGIONS = {'Latin America': ['Latin America and Caribbean'],
+                'North America': ['United States','Canada'],
+                'Europe': ['Central Europe',"Eastern Europe", 'Western Europe'],
+                'Sub-Saharan Africa': ['Sub-Saharan Africa'],
+                'North Africa and Middle East': ['North Africa and Middle East'],
+                'Asia':['Central Asia', 'East Asia','South Asia', 'Southeast Asia'],
+                'Oceania': ['Oceania']}
 
 TOPICS = ['Meningitis', 'Lower respiratory infections',
        'Intestinal infectious diseases', 'Cardiovascular diseases',
