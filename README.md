@@ -8,8 +8,8 @@ This project compares the number of quotes about specific death causes with thei
 
 1. Is there a significant asymmetry between the issues that receive the most attention and the issues that cause most deaths?
 2. Does the number of quotes about an issue increase/decrease proportionally to the number of deaths per year?
-~~3. Does the average age of victims of an issue affect how much attention it receives?~~
-~~4. Do issues receive more/less attention based on the average GDP of the countries they affect?~~
+3. ~~Does the average age of victims of an issue affect how much attention it receives?~~
+4. ~~Do issues receive more/less attention based on the average GDP of the countries they affect?~~
 5. Do issues grouped into injuries, communicable diseases, and non-communicable diseases receive different amounts of attention per death caused?
 
 ## Datasets
