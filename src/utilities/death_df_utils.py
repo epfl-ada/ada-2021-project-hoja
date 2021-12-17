@@ -58,22 +58,24 @@ def update_nan_values(df, quant_columns):
     for col in quant_columns:
         train_data = []
         pred_years = []
-        
-        for year in range(BEGIN_YEAR, END_YEAR + 1):
-            val = df.loc[df['Year'] == year, col].iloc[0]
-            if math.isnan(val):
-                print("nan")
-                pred_years.append(year)
-            else: train_data.append([year, val])
-        
-        if (len(pred_years) == 0): continue
-        
-        X = np.array(train_data)[:,0].reshape(-1,1)
-        y = np.array(train_data)[:,1].reshape(-1,1)
-        
-        pred_years, predicted_values, regsr = predict_col_nan_values(X, y, pred_years)
-        plot_predicted_values(X, y, pred_years, predicted_values, regsr, col)
-        df = update_col_nan_values(df, pred_years, predicted_values, col)
+        try:
+            for year in range(BEGIN_YEAR, END_YEAR + 1):
+                val = df.loc[df['Year'] == year, col].iloc[0]
+                if math.isnan(val):
+                    print("nan")
+                    pred_years.append(year)
+                else: train_data.append([year, val])
+
+            if (len(pred_years) == 0): continue
+            X = np.array(train_data)[:,0].reshape(-1,1)
+            y = np.array(train_data)[:,1].reshape(-1,1)
+
+            pred_years, predicted_values, regsr = predict_col_nan_values(X, y, pred_years)
+            plot_predicted_values(X, y, pred_years, predicted_values, regsr, col)
+            df = update_col_nan_values(df, pred_years, predicted_values, col)
+            
+        except IndexError:
+            pass
 
     return df
 

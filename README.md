@@ -2,41 +2,38 @@
 
 ## Abstract
 
-This project will compare the number of quotes about specific death causes with their actual death toll. The background for this research is our belief that there is a significant asymmetry between the issues with the highest death tolls and the most spoken about issues. We will combine the Quotebank dataset with data from Our World in Data, which has ranked the number of deaths by cause from 1970 to 2017. The death toll does not consider factors such as the fear created by e.g. a terrorist attack and suffering without death. However, we believe that the death toll is still a decent indicator of the severity of most issues. This research aims to learn what issues society cares most about and see if it correlates to the death tolls. Furthermore, the research will show which issues are neglected and hence might need more attention.
+This project compares the number of quotes about specific death causes with their actual death toll.  We combined the Quotebank dataset with data from Our World in Data, which has ranked the number of deaths by cause from 1970 to 2017. The death toll does not consider factors such as the fear created by e.g. a terrorist attack and suffering without death. However, we believe that the death toll is still a decent indicator of the severity of most issues. In this project we show the difference between the attention death causes receive and the number of actual deaths. Furthermore, we show how the number of deaths influences the attention a certain topic gets. Finally, we try to shed light on the inbalances and try to reason on why they occur. For the full story, see: https://peroza.github.io/ada-2021-project-hoja-pages/
 
 ## Research questions
 
 1. Is there a significant asymmetry between the issues that receive the most attention and the issues that cause most deaths?
 2. Does the number of quotes about an issue increase/decrease proportionally to the number of deaths per year?
-3. Does the average age of victims of an issue affect how much attention it receives?
-4. Do issues receive more/less attention based on the average GDP of the countries they affect?
+~~3. Does the average age of victims of an issue affect how much attention it receives?~~
+~~4. Do issues receive more/less attention based on the average GDP of the countries they affect?~~
 5. Do issues grouped into injuries, communicable diseases, and non-communicable diseases receive different amounts of attention per death caused?
 
 ## Datasets
 
 In addition to the Quotebank dataset, we will explore the data used in an article published in Our World in Data, available here: https://ourworldindata.org/causes-of-death. These datasets are extracted from other sources, mainly from Global Burden of Disease, a global study on the causes of death and disease, available here: http://ghdx.healthdata.org/gbd-results-tool, but also Amnesty International, which records data on e.g., executions, available here: https://www.amnesty.org/en/what-we-do/death-penalty/. The datasets used in Our World in Data contain estimations of the annual death tolls and their causes for each country and age group from 1970 to 2017. Hence, we will use the overlapping years between the Quotebank dataset and the Our World in Data data: 2008-2017. The dataset from Our World in Data is already stored in a CSV file and needs minimal preprocessing. It includes death by cause for the world, individual countries, and different age groups, allowing us to work on all the research questions.
 
-We also use data from the UN with annual population count, available here: https://population.un.org/wpp/Download/Standard/Population/. This data is combined with the Our World in Data data to understand the yearly relative death tolls better.
 
-For research question four, we also need data on the GDP of countries and the country of origin for the speakers. We will get the GDP data from The World Bank, available here: https://data.worldbank.org/indicator/NY.GDP.MKTP.CD, and the origin countries are retrieved from Wikidata using the speakers QIDs.
 
 ## Methods
 
-To estimate asymmetries between media coverage and actual death causes, we have two main challenges.
+**1. Quote categorization**: In order to identify when a certain quote mentions a particular death cause, we first created manually a list of keywords related to the topics of the Our World in Data. Next, we expanded these keywords by looking for aliases on Wikidata and finding synonyms using Wordnet. For some words we hardcoded exceptions to prevent Wikidata or Wordnet (Princeton University "About WordNet." https://wordnet.princeton.edu/. Princeton University. 2010.) from finding too many words, sometimes unrelated or giving high chances of finding a wrong quote. For example, one of the aliases of war on Wikidata is conflict. Conflict will however give many quotes which are not about war, so we chose to not take it from Wikidata.
 
-- **1. Quote categorization**: To accurately categorize the quotes to causes of death, we compare keywords for each death cause with the quotes. The process will be optimized by analyzing a sample of the classified quotes, and then modifying the keywords we use. We are currently just comparing strings in Python, but we plan on using The Fuzz, available here: https://github.com/seatgeek/thefuzz, which will allow us to include misspelled words or other slight modifications. For Milestone 2, we are not using The Fuzz because reading and comparing the quotes take too long, but we will try to optimize this process in Milestone 3. Examples of the preliminary keywords we use to extract relevant quotes are:
+After identification of quotes in the dataset and grouping them in the topics, we saw that some topics had quotes which we’re obviously not about the topic we wanted. For example, the topic poisoning contained quotes about water being poisoned with lead, but also about the political debate being poisoned. To filter out the latter type of quotes, we used [Sentence Transformers](https://www.sbert.net/) to vectorize the quotes of and then we clustered them with [HBDSCAN](https://hdbscan.readthedocs.io/en/latest/index.html). Finally, we took those clusters for which at least two of the top most important words are also in keywords.  This was done for those topics as defined in TOPICS_FOR_CLUSTERING in CONSTS.py.
 
-  - Diarrheal: dierrhea, cholera, etec, rotavirus, shigellosis, typhoid
+We chose to use sentence transformers and HBDSCAN as opposed to a LDA method and k-means clustering because sentence transformers should be able to distinguish between different semantic uses of the same word, which is harder with LDA. The HBDSCAN allowed to automatically get the right number of clusters, without having to set it ourselves. The clustering method was taken from: https://towardsdatascience.com/topic-modeling-with-bert-779f7db187e6
 
-  - Lower respiratory infections: lower respiratory infections, pneumonia, bronchitis, tuberculosis
 
-  - Intestinal infectious diseases: intestinal infectious diseases, cholera, typhoid fever, paratyphoid fever, salmonella
+**2. Deaths and death causes**: To get the number of deaths for each cause and type of cause, we analyzed the data from Our World in Data. The combination of this data with the found quotes per death cause allowed us to answer our research questions.
 
-- **2. Under-represented vs. over-represented**: To answer our first research question, we will compare the ratios between deaths and quotes for all the issues.
+**3. Linking quotes to country**: To see where the quotes come from, we found the country of the url on which the quote can be found by wikidata if the URL had a wikidata page. The country of the speaker was found by first looking up the speaker in the speaker_attributes.parquet dataset, from which we could get the Q-identifier of the country of the speaker. From there we could find the country once again via wikidata. This information allows us to shed some perspective on possible biases in our dataset.
 
-Once we have answers to these two strategies, we will develop our methods for the research questions 2-5. Our World in Data has all the information we need for these research questions in combination with population data and GDP data. However, research question four considers countries' GDP, and the Quotebank dataset may be too restrictive. Understandably, people talk more about death causes that affect their country. Therefore, we would need speakers from various countries with different GDP levels to research question four. We are not confident that the Quotebank dataset contains enough quotes by people from countries with a low GDP.
 
-## Proposed Project Timeline
+
+## Project Timeline (Milestone 2)
 
 - Week 45: As of now, the project pipeline is in place. We have performed initial analysis on most of the relevant Our World of Data datasets, made the code skeleton to extract quotes belonging to specific death causes, and planned how to compare them to their actual death toll.
 
@@ -48,12 +45,12 @@ Once we have answers to these two strategies, we will develop our methods for th
 
 ## Organization within the team
 
-The current main tasks for each team member are the following:
+The main tasks done by each team member are the following:
 
-**Andrea Perozziello**: Developing the code skeleton and the optimization quote classification.
+**Andrea Perozziello**: Developing the code skeleton, structuring code and development of webpage.
 
-**Oliver Welin Odeback**: Responsible for the data story and visualization of results.
+**Oliver Welin Odeback**: Responsible for the data story, visualization of results and development of webpage.
 
-**Jurriaan Schuring**: Data-preprocessing, working on extracting information of which country each quote origins from and connecting to the death causes in each country.
+**Jurriaan Schuring**: Optimization of quote classification and adding country of url and speaker to the quote data.
 
 **Henrik Myhre**: Mainly responsible for data wrangling and analyses performed on the Our World in Data.

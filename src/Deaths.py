@@ -35,6 +35,7 @@ class Deaths:
         df = extract_region_data(df, self.region)
         
         df = update_nan_values(df, self.quant_columns)
+     
         
         return df
     

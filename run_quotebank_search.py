@@ -44,7 +44,6 @@ def quotation_classification_for_file(filename):
 
     with bz2.open(filename, "rb") as file:
         for i, line in tqdm(enumerate(file)):
-            # if i ==100000: break
             quotation = str_utils.extract_quotation(line)
             found_keywords = quotebank.match_quotation_with_any_keyword(quotation)
             if len(found_keywords) > 0:
@@ -63,6 +62,7 @@ utils.load_speaker_info()
 utils.load_url_end()
 utils.load_url_country_lib()
 
+# Create quotebank object and get quotes
 quotebank = QuoteBankData("Asymmetry of News", [])
 quotebank.read_keywords_from_file()
 utils.create_directories_for_every_year()

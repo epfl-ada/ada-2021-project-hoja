@@ -18,6 +18,7 @@ SPEAKER_ATTRIBUTES_PATH = DATA_PATH + "speaker_attributes.parquet"
 URL_END_PATH = DATA_PATH + "country_url_end.txt"
 URL_COUNTRY_PATH = DATA_PATH + "url_country_lib.json"
 ID_COUNTRY_PATH = DATA_PATH +  "id_country_lib.json"
+DEATH_BY_CAUSE_PATH = "data/annual_number_of_deaths_by_cause.csv"
 
 # Causes
 ALZHEIMER_DISEASE_AND_OTHER_DEMENTIAS = 'Alzheimer disease and other dementias'
