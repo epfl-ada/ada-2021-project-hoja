@@ -17,7 +17,7 @@ def modify_cols(df, rename_cols = {}, drop_cols=[]):
     """
     Renames and drops columns, and drops all rows with Year < 2007.
     """
-    df = df[df["Year"] > 2007]
+    df = df[(df["Year"] >= BEGIN_YEAR) & (df["Year"] <= END_YEAR)]
     df = df.drop(drop_cols, axis=1)
     cols = list(df.columns)
     for i, col in enumerate(cols):

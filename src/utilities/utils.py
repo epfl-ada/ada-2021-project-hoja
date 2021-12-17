@@ -21,6 +21,10 @@ def percentage_of_total_count(df, columns):
     return df
 
 
+def pretty_num_string(num):
+    return " ".join([str(num)[::-1][i:i+3] for i in range(0, len(str(num)), 3)])[::-1]
+
+
 def prettify_column(column):
     column = column.lower().replace("_", " ").capitalize()
     return column
