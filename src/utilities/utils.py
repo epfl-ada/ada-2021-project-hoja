@@ -43,3 +43,4 @@ def update_col_names(df):
     for i in range(len(old_columns)):
         df = df.rename(columns={old_columns[i]: new_columns[i]})
     return df
+
