@@ -154,3 +154,66 @@ class QuoteBankData:
             for cause_col in CATEGORY_MAPPING[cat_col]:
                 cat_values += cause_df[cause_col].to_numpy()
             self.cat_quotes_occurrences_df[cat_col] = cat_values
+            
+    
+    def get_quote_occurences_per_country_year(self, url_or_speaker):
+        """This function returns the number of quotes from a country per year, based on speaker or url.
+        param: url_or_speaker: str
+        return: totals_per_country: dict, keys are like (country,year)"""
+
+        # Check value
+        if url_or_speaker != "url" and url_or_speaker != "speaker":
+            raise ValueError("Did not choose url or speaker")
+
+        # Safe variable
+        totals_per_country = dict()
+        # Get occurences form url from countries
+        if url_or_speaker == "url":
+            for i in range(len(self.keywords)):   
+                for key in self.keywords[i].country_url_occurences:
+                    if key in totals_per_country:
+                        totals_per_country[key] += self.keywords[i].country_url_occurences[key]
+                    else:
+                        totals_per_country[key] = self.keywords[i].country_url_occurences[key]
+        # Get occurences of speakers from countries              
+        elif url_or_speaker == "speaker":
+            for i in range(len(self.keywords)):   
+                for key in self.keywords[i].country_speaker_occurences:
+                    if key in totals_per_country:
+                        totals_per_country[key] += self.keywords[i].country_speaker_occurences[key]
+                    else:
+                        totals_per_country[key] = self.keywords[i].country_speaker_occurences[key]
+
+        return totals_per_country
+
+
+    def get_country_per_year_count(self, url_or_speaker, countries, year, percentage = False):
+        # Check value
+        if url_or_speaker != "url" and url_or_speaker != "speaker":
+            raise ValueError("Did not choose url or speaker")
+
+        # Initialize output
+        topic_appearance_country = np.zeros((len(self.keywords), len(countries)+1)) # Last column for rest of the world
+        topics = list()
+        for i in range(len(self.keywords)):
+            topics.append(self.keywords[i].name)
+            if url_or_speaker == "url":
+                for key in self.keywords[i].country_url_occurences:
+                    if key[0] in countries and key[1] == year:
+                        topic_appearance_country[i, countries.index(key[0])] = self.keywords[i].country_url_occurences[key]
+                    elif key[0] is not None and key[1] == year:
+                        topic_appearance_country[i, -1] += self.keywords[i].country_url_occurences[key] # rest of the World
+
+            elif url_or_speaker == "speaker":
+                for key in self.keywords[i].country_speaker_occurences:
+                    if key[0] in countries and key[1] == year:
+                        topic_appearance_country[i, countries.index(key[0])] = self.keywords[i].country_speaker_occurences[key]
+                    elif key[0] is not None and key[1] == year:
+                        topic_appearance_country[i, -1] += self.keywords[i].country_speaker_occurences[key] # rest of the World
+
+        # Make into DataFrame
+        topic_appearance_country = np.transpose(topic_appearance_country)
+        topic_appearance_country = pd.DataFrame(data = topic_appearance_country,
+                                               columns = topics)
+
+        return topic_appearance_country

@@ -65,14 +65,14 @@ def plot_stacked_area_chart(df_original, x_axis, y_axis_original, y_label, title
     plt.show()
 
 
-def cause_pie_chart_plot(df, year, threshold):
+def cause_pie_chart_plot(df, year, threshold, name):
     
     pc_df = df[TOPICS]
     pc_df = pc_df.iloc[[year - 2008]]
     
     other = 0
     sorted_pd = pd.DataFrame(np.sort(pc_df.values))
-    
+   
     for column in pc_df:
         if column in DEATHS_INFO_COLUMNS: continue
         if ((pc_df[column].values)) < sorted_pd.iloc[: ,-threshold].values:
@@ -80,11 +80,24 @@ def cause_pie_chart_plot(df, year, threshold):
             pc_df.drop([column], axis=1, inplace=True)
             
     pc_df = pc_df.assign(Other=other)
-    pc_df.T.plot.pie(colormap=COLOR_MAP,subplots=True, figsize=(8, 8), legend=None, ylabel = ' ', autopct='%1.1f%%', pctdistance=0.7)
-    plt.savefig('./generated/images/pie_chart_quotes_' + str(year) + '.png') 
+    pc_df.T.plot.pie(colormap=COLOR_MAP,subplots=True, figsize=(12, 8), legend=None, ylabel = ' ', autopct='%1.1f%%', pctdistance=0.7)
+    plt.savefig('./generated/images/pie_chart_quotes_' + name + str(year) + '.png') 
     plt.show() 
     
+def stacked_barplot(df, x_labels=None, y_label=None, title=None, width = 0.35, safe_name=None, log_y=False):
+    columns = df.columns
+    fig, ax = plt.subplots()
+    df.plot.bar(colormap = COLOR_MAP, ax=ax, stacked = True, logy = log_y)
 
+    ax.set_ylabel(y_label)
+    ax.set_title(title)
+    handles, lables_legend = ax.get_legend_handles_labels()
+    ax.legend(handles[::-1], lables_legend[::-1], loc='center left', bbox_to_anchor=(1, 0.5))
+    ax.set_xticklabels(x_labels, rotation=45, ha='right')
+    
+    if safe_name:
+        save_plt(safe_name)
+    
 def save_plt(name):
     plt.savefig(GENERATED_IMAGES_PATH + name + '.png', bbox_inches = 'tight') 
 
