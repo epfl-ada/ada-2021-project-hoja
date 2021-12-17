@@ -89,3 +89,16 @@ def load_url_country_lib():
 def safe_url_country_lib():
     with open(URL_COUNTRY_PATH, 'w+') as fp:
         json.dump(URL_COUNTRY, fp)
+
+
+def load_id_country_lib():
+    if os.path.isfile(ID_COUNTRY_PATH):
+        with open(ID_COUNTRY_PATH, 'r') as fp:
+            inter = json.load(fp)
+        for key in inter:
+            COUNTRY_IDENTIFIER[key] = inter[key]
+
+
+def safe_id_country_lib():
+    with open(ID_COUNTRY_PATH, 'w+') as fp:
+        json.dump(COUNTRY_IDENTIFIER, fp)
