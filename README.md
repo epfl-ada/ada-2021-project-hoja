@@ -20,8 +20,6 @@ In addition to the Quotebank dataset, we will explore the data used in an articl
 
 ## Methods
 
-To estimate asymmetries between media coverage and actual death causes, we have two main challenges.
-
 **1. Quote categorization**: In order to identify when a certain quote mentions a particular death cause, we first created manually a list of keywords related to the topics of the Our World in Data. Next, we expanded these keywords by looking for aliases on Wikidata and finding synonyms using Wordnet. For some words we hardcoded exceptions to prevent Wikidata or Wordnet (Princeton University "About WordNet." https://wordnet.princeton.edu/. Princeton University. 2010.) from finding too many words, sometimes unrelated or giving high chances of finding a wrong quote. For example, one of the aliases of war on Wikidata is conflict. Conflict will however give many quotes which are not about war, so we chose to not take it from Wikidata.
 
 After identification of quotes in the dataset and grouping them in the topics, we saw that some topics had quotes which we’re obviously not about the topic we wanted. For example, the topic poisoning contained quotes about water being poisoned with lead, but also about the political debate being poisoned. To filter out the latter type of quotes, we used [Sentence Transformers](https://www.sbert.net/) to vectorize the quotes of and then we clustered them with [HBDSCAN](https://hdbscan.readthedocs.io/en/latest/index.html). Finally, we took those clusters for which at least two of the top most important words are also in keywords.  This was done for those topics as defined in TOPICS_FOR_CLUSTERING in CONSTS.py.
@@ -35,7 +33,7 @@ We chose to use sentence transformers and HBDSCAN as opposed to a LDA method and
 
 
 
-## Project Timeline
+## Project Timeline (Milestone 2)
 
 - Week 45: As of now, the project pipeline is in place. We have performed initial analysis on most of the relevant Our World of Data datasets, made the code skeleton to extract quotes belonging to specific death causes, and planned how to compare them to their actual death toll.
 
