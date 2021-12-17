@@ -62,7 +62,6 @@ def update_nan_values(df, quant_columns):
             for year in range(BEGIN_YEAR, END_YEAR + 1):
                 val = df.loc[df['Year'] == year, col].iloc[0]
                 if math.isnan(val):
-                    print("nan")
                     pred_years.append(year)
                 else: train_data.append([year, val])
 
