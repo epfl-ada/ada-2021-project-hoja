@@ -93,7 +93,7 @@ URL_COUNTRY = dict()
 
 # Years for data processing
 BEGIN_YEAR = 2008
-END_YEAR = 2017
+END_YEAR = 2016
 
 # Deaths object constants
 DEATHS_INFO_COLUMNS = ["Entity", "Code", "Year"]
