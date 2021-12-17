@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import random
-from src.CONSTS import COLORS, DEATHS_INFO_COLUMNS, GENERATED_IMAGES_PATH, COLOR_MAP
+from src.CONSTS import *
 import numpy as np
+import pandas as pd
+
 
 def plot_line_chart(df, x_axis, y_axis, y_label, title, log_y = True, y_start_0 = False):
     """
@@ -63,5 +65,27 @@ def plot_stacked_area_chart(df_original, x_axis, y_axis_original, y_label, title
     plt.show()
 
 
+def cause_pie_chart_plot(df, year, threshold):
+    
+    pc_df = df[TOPICS]
+    pc_df = pc_df.iloc[[year - 2008]]
+    
+    other = 0
+    sorted_pd = pd.DataFrame(np.sort(pc_df.values))
+    
+    for column in pc_df:
+        if column in DEATHS_INFO_COLUMNS: continue
+        if ((pc_df[column].values)) < sorted_pd.iloc[: ,-threshold].values:
+            other += pc_df[column].values
+            pc_df.drop([column], axis=1, inplace=True)
+            
+    pc_df = pc_df.assign(Other=other)
+    pc_df.T.plot.pie(colormap=COLOR_MAP,subplots=True, figsize=(8, 8), legend=None, ylabel = ' ', autopct='%1.1f%%', pctdistance=0.7)
+    plt.savefig('./generated/images/pie_chart_quotes_' + str(year) + '.png') 
+    plt.show() 
+    
+
 def save_plt(name):
     plt.savefig(GENERATED_IMAGES_PATH + name + '.png', bbox_inches = 'tight') 
+
+

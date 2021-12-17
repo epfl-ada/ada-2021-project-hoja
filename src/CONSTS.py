@@ -2,7 +2,7 @@
 File name: CONSTS.py
 Author: HOJA
 Date created: 12/11/2021
-Date last modified: 12/11/2021
+Date last modified: 17/12/2021
 Python Version: 3.8
 """
 import matplotlib.pyplot as plt
@@ -50,6 +50,36 @@ SUICIDE = 'Suicide'
 TUBERCULOSIS = 'Tuberculosis'
 WAR_AND_TERRORISM = 'War and terrorism'
 
+TOPICS = [ALZHEIMER_DISEASE_AND_OTHER_DEMENTIAS, 
+          CARDIOVASCULAR_DISEASES, 
+          CHRONIC_KIDNEY_DISEASE, 
+          CHRONIC_RESPIRATORY_DISEASES, 
+          CIRRHOSIS_AND_OTHER_CHRONIC_LIVER_DISEASES,
+          DIABETES_MELLITUS,
+          DIARRHEAL_DISEASES,
+          DIGESTIVE_DISEASES, 
+          DROWNING, 
+          DRUG_USE_AND_ALCOHOLISM, 
+          EXPOSURE_TO_FORCES_OF_NATURE, 
+          FIRE_HEAT_AND_HOT_SUBSTANCES, 
+          HEPATITIS, 
+          HIV_AIDS,
+          INTERPERSONAL_VIOLENCE, 
+          INTESTINAL_INFECTIOUS_DISEASES, 
+          LOWER_RESPIRATORY_INFECTIONS, 
+          MALARIA, 
+          MATERNAL_DISORDERS, 
+          MENINGITIS, 
+          NEONATAL_DISORDERS, 
+          NEOPLASMS, 
+          NUTRITIONAL_DEFICIENCIES, 
+          PARKINSON_DISEASE, 
+          POISONINGS, 
+          ROAD_INJURIES, 
+          SUICIDE, 
+          TUBERCULOSIS, 
+          WAR_AND_TERRORISM]
+
 # Regular expression chars
 SPECIAL_CHARS = "!#$%^&*()/ "
 
@@ -83,14 +113,6 @@ SYNONYM_DICTIONARY = {
         "consumption": "pulmonary_tuberculosis.n.01"
 }
 
-# To add country of speaker
-COUNTRY_IDENTIFIER = dict()
-SPEAKER_ATTRIBUTES = dict()
-
-# To add country of url
-URL_END_LIB = dict()
-URL_COUNTRY = dict()
-
 # Years for data processing
 BEGIN_YEAR = 2008
 END_YEAR = 2016
@@ -105,6 +127,18 @@ RENAME_CAUSE_COLS = {'Terrorism (deaths)': 'Terrorism', 'Deaths - Self-harm - Se
 DROP_CAUSE_COLS = ['Number of executions (Amnesty International)']
 
 # Categories
+INJURIES = "Injuries"
+NON_COMMUNICABLE_DISEASES = "Non-communicable diseases"
+COMMUNICABLE_DISEASES = "Communicable diseases"
+RENAME_CAT_COLS = {"Deaths - Communicable, maternal, neonatal, and nutritional diseases - Sex: Both - Age: All Ages (Number)": COMMUNICABLE_DISEASES}
+
+CATEGORIES = [INJURIES, NON_COMMUNICABLE_DISEASES, COMMUNICABLE_DISEASES]
+CATEGORY_MAPPING = {INJURIES: [FIRE_HEAT_AND_HOT_SUBSTANCES, ROAD_INJURIES, WAR_AND_TERRORISM, EXPOSURE_TO_FORCES_OF_NATURE, DROWNING, SUICIDE, INTERPERSONAL_VIOLENCE, POISONINGS,  DRUG_USE_AND_ALCOHOLISM], 
+                    NON_COMMUNICABLE_DISEASES: [DIGESTIVE_DISEASES, ALZHEIMER_DISEASE_AND_OTHER_DEMENTIAS, PARKINSON_DISEASE, CARDIOVASCULAR_DISEASES, DIABETES_MELLITUS, CHRONIC_RESPIRATORY_DISEASES, CHRONIC_KIDNEY_DISEASE, NEOPLASMS, CIRRHOSIS_AND_OTHER_CHRONIC_LIVER_DISEASES],
+                    COMMUNICABLE_DISEASES: [MENINGITIS, LOWER_RESPIRATORY_INFECTIONS, HEPATITIS, DIARRHEAL_DISEASES, NEONATAL_DISORDERS, NUTRITIONAL_DEFICIENCIES, MATERNAL_DISORDERS, HIV_AIDS, MALARIA, TUBERCULOSIS, INTESTINAL_INFECTIOUS_DISEASES]}
+
+
+# Country and region consts
 ALL_COUNTRIES_CODE = ['af', 'ax', 'al', 'dz', 'as', 'ad', 'ao', 'ai', 'aq', 'ag', 'ar', 'am', 'aw', 'au', 'at', 'az',
                     'bs', 'bh', 'bd', 'bb', 'by', 'be', 'bz', 'bj', 'bm', 'bt', 'bo', 'bq', 'ba', 'bw', 'bv', 'br', 'io',
                     'bn', 'bg', 'bf', 'bi', 'kh', 'cm', 'ca', 'cv', 'ky', 'cf', 'td', 'cl', 'cn', 'cx', 'cc', 'co', 'km',
@@ -121,25 +155,18 @@ ALL_COUNTRIES_CODE = ['af', 'ax', 'al', 'dz', 'as', 'ad', 'ao', 'ai', 'aq', 'ag'
                     'tl', 'tg', 'tk', 'to', 'tt', 'tn', 'tr', 'tm', 'tc', 'tv', 'ug', 'ua', 'ae', 'gb', 'us', 'um', 'uy',
                     'uz', 'vu', 've', 'vn', 'vg', 'vi', 'wf', 'eh', 'ye', 'zm', 'zw', 'gq']
 
-TOPICS = ['Meningitis', 'Lower respiratory infections',
-       'Intestinal infectious diseases', 'Cardiovascular diseases',
-       'Alzheimer disease and other dementias', 'Chronic kidney disease',
-       'Chronic respiratory diseases',
-       'Cirrhosis and other chronic liver diseases', 'Digestive diseases',
-       'Hepatitis', 'Neoplasms', 'Parkinson disease',
-       'Fire, heat, and hot substances', 'Malaria', 'Drowning',
-       'Interpersonal violence', 'Hiv/aids', 'Tuberculosis', 'Road injuries',
-       'Maternal disorders', 'Neonatal disorders', 'Diarrheal diseases',
-       'Suicide', 'Diabetes mellitus', 'Poisonings', 'War and terrorism',
-       'Exposure to forces of nature', 'Nutritional deficiencies',
-       'Drug use and alcoholism']
-INJURIES = "Injuries"
-NON_COMMUNICABLE_DISEASES = "Non-communicable diseases"
-COMMUNICABLE_DISEASES = "Communicable diseases"
-RENAME_CAT_COLS = {"Deaths - Communicable, maternal, neonatal, and nutritional diseases - Sex: Both - Age: All Ages (Number)": COMMUNICABLE_DISEASES}
+REGIONS = ['Latin America and Caribbean','North Africa and Middle East','Sub-Saharan Africa','Oceania','Central Asia', 'East Asia','South Asia', 'Southeast Asia','Central Europe',"Eastern Europe", 'Western Europe',  'United States','Canada']
 
-CATEGORIES = [INJURIES, NON_COMMUNICABLE_DISEASES, COMMUNICABLE_DISEASES]
-CATEGORY_MAPPING = {INJURIES: [FIRE_HEAT_AND_HOT_SUBSTANCES, ROAD_INJURIES, WAR_AND_TERRORISM, EXPOSURE_TO_FORCES_OF_NATURE, DROWNING, SUICIDE, INTERPERSONAL_VIOLENCE, POISONINGS,  DRUG_USE_AND_ALCOHOLISM], 
-                    NON_COMMUNICABLE_DISEASES: [DIGESTIVE_DISEASES, ALZHEIMER_DISEASE_AND_OTHER_DEMENTIAS, PARKINSON_DISEASE, CARDIOVASCULAR_DISEASES, DIABETES_MELLITUS, CHRONIC_RESPIRATORY_DISEASES, CHRONIC_KIDNEY_DISEASE, NEOPLASMS, CIRRHOSIS_AND_OTHER_CHRONIC_LIVER_DISEASES],
-                    COMMUNICABLE_DISEASES: [MENINGITIS, LOWER_RESPIRATORY_INFECTIONS, HEPATITIS, DIARRHEAL_DISEASES, NEONATAL_DISORDERS, NUTRITIONAL_DEFICIENCIES, MATERNAL_DISORDERS, HIV_AIDS, MALARIA, TUBERCULOSIS, INTESTINAL_INFECTIOUS_DISEASES]}
-
+MAIN_REGIONS = {'Latin America': ['Latin America and Caribbean'],
+                'North America': ['United States','Canada'],
+                'Europe': ['Central Europe',"Eastern Europe", 'Western Europe'],
+                'Sub-Saharan Africa': ['Sub-Saharan Africa'],
+                'North Africa and Middle East': ['North Africa and Middle East'],
+                'Asia':['Central Asia', 'East Asia','South Asia', 'Southeast Asia'],
+                'Oceania': ['Oceania']}
+# To add country of speaker
+COUNTRY_IDENTIFIER = dict()
+SPEAKER_ATTRIBUTES = dict()
+# To add country of url
+URL_END_LIB = dict()
+URL_COUNTRY = dict()

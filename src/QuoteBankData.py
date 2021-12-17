@@ -7,7 +7,7 @@ Python Version: 3.8
 """
 
 from src.Keyword import Keyword
-from src.CONSTS import KEYWORDS_JSON_FILE_PATH, GENERATED_PATH, TOPICS_FOR_CLUSTERING, CATEGORY_MAPPING, DEATHS_INFO_COLUMNS
+from src.CONSTS import *
 from src.utilities import quotebank_preprocessing_utils as utils
 from src.utilities import string_utils as str_utils
 import pandas as pd
@@ -20,33 +20,10 @@ class QuoteBankData:
     def __init__(self, name: str, keywords: list):
         self.name = name
         self.keywords = keywords
-        self.quotes_occurrences_df = pd.DataFrame(columns=["Year"] + self.get_all_keyword_names())
+        self.quotes_occurrences_df = pd.DataFrame(columns=["Year"] + TOPICS)
         self.quotes_percentage_df = self.quotes_occurrences_df.copy()
-        self.cat_quotes_occurrences_df = pd.DataFrame(columns=["Year"] + list(CATEGORY_MAPPING.keys()))
+        self.cat_quotes_occurrences_df = pd.DataFrame(columns=["Year"] + CATEGORIES)
         self.cat_quotes_percentage_df = self.cat_quotes_occurrences_df.copy()
-
-
-    def get_all_keyword_names(self) -> list:
-        """
-        Get all keyword names for the topic
-        :return: A list of all keyword names
-        """
-        all_keyword_names = []
-        for k in self.keywords:
-            all_keyword_names.append(k.name)
-        return all_keyword_names
-
-
-    def get_keyword_by_name(self, name) -> Keyword:
-        #TODO delete?
-        """
-        Given name return the corresponding Keyword object from self.keyword list
-        :param name: str
-        :return: Keyword
-        """
-        for k in self.keywords:
-            if k.name.lower() == name:
-                return k
 
 
     def read_keywords_from_file(self):
@@ -168,9 +145,12 @@ class QuoteBankData:
     def map_df_causes_to_categories(self):
         cause_df = self.quotes_occurrences_df.copy()
         self.cat_quotes_occurrences_df["Year"] = cause_df["Year"]
+        
         for cat_col in self.cat_quotes_occurrences_df.columns:
             if cat_col in DEATHS_INFO_COLUMNS: continue
+            
             cat_values = np.zeros(cause_df.shape[0])
+            
             for cause_col in CATEGORY_MAPPING[cat_col]:
                 cat_values += cause_df[cause_col].to_numpy()
             self.cat_quotes_occurrences_df[cat_col] = cat_values

@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
 """
-Created on Sun Dec 12 14:44:51 2021
-
-@author: jurri
+File name: add_features.py
+Author: HOJA
+Date created: 03/12/2021
+Date last modified: 17/12/2021
+Python Version: 3.8
 """
 
 import json

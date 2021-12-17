@@ -39,9 +39,9 @@ class Deaths:
         return df
     
 
-    def plot_lines(self, y_label, title):
+    def plot_lines(self, y_label = "", title = ""):
         plot_line_chart(self.df.copy(), "Year", self.quant_columns.copy(), y_label, title)
     
-    def plot_stacked_areas(self, y_label, title):
+    def plot_stacked_areas(self, y_label = "", title = ""):
         plot_stacked_area_chart(self.percentage_df.copy(), "Year", self.quant_columns.copy(), y_label, title)
       
